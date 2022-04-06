@@ -7,9 +7,7 @@ import { getIGNData } from './api/index';
 import { Header, MainVideo, Review, VideoList } from './components';
 
 const App = () => {
-    const [video, setVideo] = useState({
-        url: '',
-    });
+    const [video, setVideo] = useState([]);
     const [videos, setVideos] = useState([]);
 
 
@@ -20,7 +18,7 @@ const App = () => {
         getIGNData()
             .then(({ data }) => {
                 console.log(data);
-                setVideo({url: data[0].assets[4].url});
+                setVideo({url: data[0].assets});
                 setVideos(data);
             })
             .catch(e => {
@@ -33,13 +31,13 @@ const App = () => {
             <CssBaseline />
             <Header />
             <Grid container spacing={3} style={{ width: '80%', margin: '0vw 10vw' }}>
-                <Grid item xd={12} md={9}>
+                <Grid item xs={12} md={9} >
                     <MainVideo video={video.url} />
                 </Grid>
                 <Grid item xs={12} md={3}>
                     <VideoList />
                 </Grid>
-                <Grid item xd={9}>
+                <Grid item xs={12} sm={9}>
                     <Review />
                 </Grid>
             </Grid>
