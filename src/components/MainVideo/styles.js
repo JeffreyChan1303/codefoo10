@@ -4,6 +4,8 @@ export default makeStyles((theme) => ({
     playerWrapper: {
         position: 'relative',
         paddingTop: '56.25%',
+        borderRadius: '7px',
+        overflow: 'hidden',
     },
     reactPlayer: {
         position: 'absolute',

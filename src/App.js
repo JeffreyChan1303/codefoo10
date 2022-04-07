@@ -32,7 +32,7 @@ const App = () => {
             <Header />
             <Grid container spacing={3} style={{ width: '80%', margin: '0vw 10vw' }}>
                 <Grid item xs={12} md={9} >
-                    <MainVideo video={video.url} />
+                    <MainVideo videoData={video.url} />
                 </Grid>
                 <Grid item xs={12} md={3}>
                     <VideoList />
