@@ -31,6 +31,7 @@ const MainVideo = ({videoData}) => {
         muted: true,
         volume: .5,
         quality: '480p',
+        qualityIndex: 0,
     });
     const {playing, muted, volume} = videoState;
     const handlePlayPause = () => {
@@ -73,7 +74,7 @@ const MainVideo = ({videoData}) => {
     console.log(videoArr);
     return (
         <>
-            <div className={classes.playerWrapper}>
+            <div ref={playerContainerRef} className={classes.playerWrapper}>
                 <ReactPlayer id="ReactPlayer"
                     className={classes.reactPlayer}
                     // url={videoArr}
@@ -89,7 +90,7 @@ const MainVideo = ({videoData}) => {
                     }}
                 />
                 {/* Top Controls */}
-                <div ref={playerContainerRef} className={classes.playerControls} >
+                <div className={classes.playerControls} >
                     <Grid container direction="row" alignItems="center" justifyContent="space-between" style={{padding: '16'}}>
                         <Grid item>
                             <Typography variant="h6" style={{ color: "#fff" }}>Video Title</Typography>
