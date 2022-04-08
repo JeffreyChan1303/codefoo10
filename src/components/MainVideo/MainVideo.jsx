@@ -19,7 +19,7 @@ import useStyles from './styles';
 // import PauseRoundedIcon from '@mui/icons-material/PauseRounded';
 const MainVideo = ({videoData}) => {
     const classes = useStyles();
-    console.log(videoData);
+    // console.log(videoData);
     const videoArr = [];
     const qualityArr = [];
 
@@ -69,15 +69,15 @@ const MainVideo = ({videoData}) => {
         }
     }
     let video = videoArr[0]
-    console.log(video)
+    
+    // console.log(video)
+    // console.log(videoArr);
 
-    console.log(videoArr);
     return (
         <>
             <div ref={playerContainerRef} className={classes.playerWrapper}>
                 <ReactPlayer id="ReactPlayer"
                     className={classes.reactPlayer}
-                    // url={videoArr}
                     url={video}
                     // controls={true}
                     width="100%" 

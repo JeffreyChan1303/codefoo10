@@ -1,25 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { CssBaseline, Grid } from '@material-ui/core';
-import ReactPlayer from 'react-player/lazy';
-
+import { useMediaQuery } from 'react-responsive';
 import { getIGNData } from './api/index';
 
 import { Header, MainVideo, Review, VideoList } from './components';
 
 const App = () => {
-    const [video, setVideo] = useState([]);
-    const [videos, setVideos] = useState([]);
+    const [videoArr, setVideoArr] = useState([]);
+    const video = useRef({url: ''});
 
+    const isMediumDevice = useMediaQuery({
+        query: '(min-width: 950px)'
+    })
 
-    console.log(video);
-    console.log(videos);
+    console.log(video.current);
+    console.log(videoArr);
 
     useEffect(() => {
         getIGNData()
             .then(({ data }) => {
                 console.log(data);
-                setVideo({url: data[0].assets});
-                setVideos(data);
+                video.current = {url: data[0].assets};
+                setVideoArr(data);
             })
             .catch(e => {
                 console.log(e);
@@ -30,18 +32,29 @@ const App = () => {
         <>
             <CssBaseline />
             <Header />
-            <Grid container spacing={3} style={{ width: '80%', margin: '0vw 10vw' }}>
-                <Grid item xs={12} md={9} >
-                    <MainVideo videoData={video.url} />
+            {isMediumDevice? (
+                <Grid container spacing={5} style={{ width: '85%', margin: '0vw auto' }}>
+                    <Grid item xs={12} md={8} >
+                        <MainVideo videoData={video.current.url} />
+                        <Review />
+                    </Grid>
+                    <Grid item xs={12} md={4}>
+                        <VideoList videoArr={videoArr} isMediumDevice={true} />
+                    </Grid>
                 </Grid>
-                <Grid item xs={12} md={3}>
-                    <VideoList />
+            ) : (
+                <Grid container spacing={5} style={{ width: '85%', margin: '0vw auto' }}>
+                    <Grid item xs={12} md={8} >
+                        <MainVideo videoData={video.current.url} />
+                    </Grid>
+                    <Grid container direction='row' spacing={2} style={{ flexWrap: 'nowrap', overflowX: 'scroll'}}>
+                        <VideoList videoArr={videoArr} isMediumDevice={false} />
+                    </Grid>
+                    <Grid item xs={12} sm={8}>
+                        <Review />
+                    </Grid>
                 </Grid>
-                <Grid item xs={12} sm={9}>
-                    <Review />
-                </Grid>
-            </Grid>
-
+            )}
         </>
     )
 }
