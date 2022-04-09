@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ReactPlayer from 'react-player';
-import { Button, Slider, Grid, Typography, IconButton, Select } from '@material-ui/core';
+import { Button, Slider, Grid, Typography, IconButton, Select, Tooltip } from '@material-ui/core';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import PauseIcon from '@mui/icons-material/Pause';
 import ReplyRoundedIcon from '@mui/icons-material/ReplyRounded';
@@ -17,6 +17,23 @@ import useStyles from './styles';
 
 
 // import PauseRoundedIcon from '@mui/icons-material/PauseRounded';
+
+
+const formatTime = (seconds) => {
+    if (isNaN(seconds)) {
+        return '00:00';
+    }
+    const date = new Date(seconds * 1000);
+    const hh = date.getUTCHours();
+    const mm = date.getUTCMinutes();
+    const ss = date.getUTCSeconds().toString().padStart(2, "0");
+    if(hh) {
+        return `${hh}:${mm.toString().padStart(2, "0")}:${ss}`;
+    }
+    return `${mm}:${ss}`;
+}
+
+
 const MainVideo = ({videoData}) => {
     const classes = useStyles();
     // console.log(videoData);
@@ -24,6 +41,7 @@ const MainVideo = ({videoData}) => {
     const qualityArr = [];
 
     const playerContainerRef = useRef(null)
+    const playerRef = useRef(null);
     const [quality, setQuality] = useState('');
 
     const [videoState, setVideoState] = useState({
@@ -32,8 +50,12 @@ const MainVideo = ({videoData}) => {
         volume: .5,
         quality: '480p',
         qualityIndex: 0,
+        played: 0,
+        seeking: false,
+
     });
-    const {playing, muted, volume} = videoState;
+    const {playing, muted, volume, played, seeking} = videoState;
+
     const handlePlayPause = () => {
         setVideoState({ ...videoState, playing: !videoState.playing })
     };
@@ -47,7 +69,7 @@ const MainVideo = ({videoData}) => {
             muted: newVolume === 0? true : false
         });
     };
-    const handleVolumeSeekDown = (e, newVolume) => {
+    const handleVolumeSeekUp = (e, newVolume) => {
         setVideoState({ 
             ...videoState, 
             volume: parseFloat(newVolume/100), 
@@ -57,6 +79,39 @@ const MainVideo = ({videoData}) => {
     const toggleFullScreen = () => {
         screenfull.toggle(playerContainerRef.current);
     };
+    const handleProgress = (changeState) => {
+        // console.log(changeState);
+        if (!videoState.seeking) {
+            setVideoState({ ...videoState, ...changeState})
+        }
+    };
+
+    const handleProgressSeekChange = (e, newValue) => {
+        setVideoState({ ...videoState, played: parseFloat(newValue / 100) })
+    };
+    const handleProgressSeekMouseDown = (e) => {
+        setVideoState({ ...videoState, seeking: true });
+    };
+
+    const handleProgressSeekMouseUp = (e, newValue) => {
+        setVideoState({ ...videoState, seeking: false });
+        playerRef.current.seekTo(newValue / 100);
+    };
+
+    const currentTime = playerRef.current ? playerRef.current.getCurrentTime() : '00:00';
+    const duration = playerRef.current ? playerRef.current.getDuration() : '00:00';
+    const elapsedTime = formatTime(currentTime);
+    const totalDuration = formatTime(duration);
+
+    function ValueLabelComponent(props) { // make this lok better... keep it open when dragging
+        const { children, open, value } = props;
+      
+        return (
+          <Tooltip open={open} enterTouchDelay={0} placement="top" title={value}>
+            {children}
+          </Tooltip>
+        );
+    }
 
     const qualityChange = (event) => {
         setQuality(event.target.value);
@@ -77,6 +132,7 @@ const MainVideo = ({videoData}) => {
         <>
             <div ref={playerContainerRef} className={classes.playerWrapper}>
                 <ReactPlayer id="ReactPlayer"
+                    ref={playerRef}
                     className={classes.reactPlayer}
                     url={video}
                     // controls={true}
@@ -85,9 +141,8 @@ const MainVideo = ({videoData}) => {
                     muted={muted}
                     playing={playing}
                     volume={volume}
-                    onEnded={() => {
 
-                    }}
+                    onProgress={handleProgress}
                 />
                 {/* Top Controls */}
                 <div className={classes.playerControls} >
@@ -105,7 +160,20 @@ const MainVideo = ({videoData}) => {
 
                     <Grid container direction="row" justifyContent="space-between" alignItems="center" style={{padding: "16"}}>
                         <Grid item xs={12}>
-                            <Slider className={classes.progressBar} min={0} max={100} defaultValue={20} style={{padding: '0, 10px'}} />
+                            <Slider 
+                                className={classes.progressBar} 
+                                min={0} 
+                                max={100} 
+                                defaultValue={0}
+                                value={played * 100}
+                                style={{padding: '0, 10px'}}
+                                ValueLabelComponent={(props => (
+                                    <ValueLabelComponent {...props} value={elapsedTime} />
+                                ))}
+                                onChange={handleProgressSeekChange}
+                                onMouseDown={handleProgressSeekMouseDown}
+                                onChangeCommitted={handleProgressSeekMouseUp}
+                            />
                         </Grid>
 
                         <Grid item >
@@ -137,11 +205,11 @@ const MainVideo = ({videoData}) => {
                                     value={volume * 100} 
                                     className={classes.volumeSlider}
                                     onChange={handleVolumeChange}
-                                    onChangeCommitted={handleVolumeSeekDown}
+                                    onChangeCommitted={handleVolumeSeekUp}
                                     />
 
                                 <Button variant="text" style={{ color: "white", margin: '16px' }}>
-                                    <Typography>1:34 / 4:17</Typography>
+                                    <Typography>{elapsedTime}/{totalDuration}</Typography>
                                 </Button>
                             </Grid>
                         </Grid>

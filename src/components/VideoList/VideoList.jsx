@@ -36,11 +36,13 @@ const VideoList = ({videoArr, isMediumDevice}) => {
                             alt="image not loaded"
                         />
                     </div>
-                    <div className={classes.textWrapper} >
-                        <Typography noWrap variant="body1">{titleArr[index]}</Typography>
+                    <div className={classes.textContainer} >
+                        <div className={classes.textWrapper} >
+                            <Typography className={classes.text} variant="body2">{titleArr[index]}</Typography>
+                        </div>
                     </div>
                 </Grid>
-                {indexArr.length - 1 != index && <hr/>}
+                {indexArr.length - 1 != index && <hr style={{opacity: '40%'}} />}
             </>
             ))}
         </>
@@ -48,19 +50,22 @@ const VideoList = ({videoArr, isMediumDevice}) => {
         <>
             {indexArr.map((index) => (
             <>
-                <Grid item className={classes.playlistItem} xs={4} md={12}>
-                    <div className={classes.playlistImgWrapper}>
+                <Grid item className={classes.playlistItem} xs={12} md={12} style={{minWidth: '30vw'}}>
+                    {/* ayyooooo */}
+                    <div className={classes.playlistImgWrapper} >
                         <img  
                             className={classes.playlistImg} 
                             src={thumbnailArr[index]} 
                             alt="image not loaded"
                         />
                     </div>
-                    <div className={classes.textWrapper} >
-                        <Typography noWrap variant="body1">{titleArr[index]}</Typography>
+                    <div className={classes.textContainer}>
+                        <div className={classes.textWrapper} >
+                            <Typography className={classes.text} variant="body2">{titleArr[index]}</Typography>
+                        </div>
                     </div>
                 </Grid>
-                {indexArr.length - 1 != index && <hr/>}
+                {indexArr.length - 1 != index && <hr style={{opacity: '40%'}}/>}
             </>
             ))}
         </>

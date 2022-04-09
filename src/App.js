@@ -10,7 +10,7 @@ const App = () => {
     const video = useRef({url: ''});
 
     const isMediumDevice = useMediaQuery({
-        query: '(min-width: 950px)'
+        query: '(min-width: 960px)'
     })
 
     console.log(video.current);
@@ -47,10 +47,10 @@ const App = () => {
                     <Grid item xs={12} md={8} >
                         <MainVideo videoData={video.current.url} />
                     </Grid>
-                    <Grid container direction='row' spacing={2} style={{ flexWrap: 'nowrap', overflowX: 'scroll'}}>
+                    <Grid container direction='row' spacing={1} style={{ flexWrap: 'nowrap', overflowX: 'scroll'}}>
                         <VideoList videoArr={videoArr} isMediumDevice={false} />
                     </Grid>
-                    <Grid item xs={12} sm={8}>
+                    <Grid item xs={12} >
                         <Review />
                     </Grid>
                 </Grid>

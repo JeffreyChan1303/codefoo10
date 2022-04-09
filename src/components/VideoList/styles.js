@@ -6,8 +6,7 @@ export default makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'row',
         gap: '5%',
-        maxHeight: '15vh',
-        // height: '28.125%',
+        maxHeight: '28.125%',
     },
     playlistImgWrapper: {
         position: 'relative',
@@ -26,7 +25,25 @@ export default makeStyles((theme) => ({
         width: '100%',
         height: '100%',
     },
-    textWrapper: {
+    textContainer: {
+        position: 'relative',
         width: '50%',
+        paddingTop: '28.125%',
     },
+    textWrapper: {
+        position: 'absolute',
+        top: '0',
+        bottom: '0',
+        left: '0',
+        right: '0',
+        width: '100%',
+        height: '100%',
+    },
+    text: {
+        position: 'relative',
+        height: '100%',
+        width: '100%',
+        textOverflow: 'ellipsis',
+        overflowY: 'hidden',
+    }
 }));
