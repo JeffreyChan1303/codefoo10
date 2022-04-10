@@ -16,6 +16,7 @@ import screenfull from 'screenfull';
 import useStyles from './styles';
 
 
+
 // import PauseRoundedIcon from '@mui/icons-material/PauseRounded';
 
 
@@ -47,6 +48,7 @@ const MainVideo = ({videoData}) => {
         muted: true,
         volume: .5,
         played: 0,
+        loaded: 0,
         seeking: false,
         video: {
             url: null,
@@ -110,6 +112,7 @@ const MainVideo = ({videoData}) => {
         if (!videoState.seeking) {
             setVideoState({ ...videoState, ...changeState})
         }
+        console.log({...videoState})
     };
 
     const handleProgressSeekChange = (e, newValue) => {
@@ -170,22 +173,24 @@ const MainVideo = ({videoData}) => {
 
                     {/* Bottom Controls */}
 
-                    <Grid container direction="row" justifyContent="space-between" alignItems="center" style={{padding: "16"}}>
+                    <Grid container direction="row" justifyContent="space-between" alignItems="center" className={classes.bottomControls} >
                         <Grid item xs={12}>
-                            <Slider 
+                            <div className={classes.progressBufferWrapper} >
+                                <div className={classes.progressBuffer} style={{left: `${videoState.played * 100}%`, width: `${(videoState.loaded - videoState.played) * 100}%`}} />
+                            </div>
+                            <Slider
                                 className={classes.progressBar} 
                                 min={0} 
                                 max={100} 
                                 defaultValue={0}
                                 value={played * 100}
-                                style={{padding: '0, 10px'}}
                                 ValueLabelComponent={(props => (
                                     <ValueLabelComponent {...props} value={elapsedTime} />
                                 ))}
                                 onChange={handleProgressSeekChange}
                                 onMouseDown={handleProgressSeekMouseDown}
                                 onChangeCommitted={handleProgressSeekMouseUp}
-                            />
+                                />
                         </Grid>
 
                         <Grid item >
@@ -218,7 +223,7 @@ const MainVideo = ({videoData}) => {
                                     className={classes.volumeSlider}
                                     onChange={handleVolumeChange}
                                     onChangeCommitted={handleVolumeSeekUp}
-                                    />
+                                />
 
                                 <Button variant="text" style={{ color: "white", margin: '0' }}>
                                     <Typography>{elapsedTime}/{totalDuration}</Typography>
@@ -231,16 +236,14 @@ const MainVideo = ({videoData}) => {
                         <Grid item>
                             {!video.quality && (video.quality = qualityArr[qualityArr.length - 1])} {/* this initializes the select bar on load */}
                             {qualityArr[0] &&
-                            <Select
-                                className={classes.bottomIcons}
-                                labelId="demo-simple-select-label"
-                                id="demo-simple-select"
+                            <Select 
+                                className={classes.bottomIcons} // this has issue when in fullscreen
                                 value={video.quality}
                                 defaultValue={video.quality }
                                 onChange={qualityChange}
                             >
                                 {qualityArr.map((item) => (
-                                    <MenuItem value={item}>{item}p</MenuItem>
+                                    <MenuItem style={{ zIndex: 2147483647 }} value={item} >{item}p</MenuItem>
                                 ))}
                             </Select>
                             }

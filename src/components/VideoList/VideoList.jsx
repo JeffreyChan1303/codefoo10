@@ -11,8 +11,8 @@ const VideoList = ({videoArr, isMediumDevice}) => {
     const titleArr = [];
     const indexArr = [];
 
-    console.log(videoArr)
-    console.log(isMediumDevice)
+    // console.log(videoArr)
+    // console.log(isMediumDevice)
 
     for (let i = 0; i < videoArr.length; i++) {
         let temp = videoArr[i]
@@ -20,7 +20,7 @@ const VideoList = ({videoArr, isMediumDevice}) => {
         titleArr.push(temp.metadata.title); // inputs the title of the video
         indexArr.push(i);
     }
-    console.log(thumbnailArr[0])
+    // console.log(thumbnailArr[0])
 
     return (
         <>
