@@ -36,25 +36,51 @@ const formatTime = (seconds) => {
 
 const MainVideo = ({videoData}) => {
     const classes = useStyles();
-    // console.log(videoData);
     const videoArr = [];
     const qualityArr = [];
 
     const playerContainerRef = useRef(null)
     const playerRef = useRef(null);
-    const [quality, setQuality] = useState('');
 
     const [videoState, setVideoState] = useState({
         playing: true,
         muted: true,
         volume: .5,
-        quality: '480p',
-        qualityIndex: 0,
         played: 0,
         seeking: false,
-
+        video: {
+            url: null,
+            quality: null,
+            index: 0,
+        }
     });
-    const {playing, muted, volume, played, seeking} = videoState;
+    const {playing, muted, volume, played, seeking, video} = videoState;
+
+    if (videoData) { // add all video content into arrays
+        for (let i = 0; i < videoData.length; i++) {
+            videoArr.push(videoData[i].url);
+            qualityArr.push(videoData[i].height);
+        }
+    }
+
+    
+    
+    // console.log(video)
+    // console.log(qualityArr);
+
+    const qualityChange = (e) => {
+        setVideoState({ ...videoState,
+            video: { 
+                quality: e.target.value, 
+                url: videoArr[qualityArr.indexOf(e.target.value)],
+            }
+        });
+    };
+
+    const resumeWhereLeftOff = () => {
+        playerRef.current.seekTo(videoState.played)
+    }
+
 
     const handlePlayPause = () => {
         setVideoState({ ...videoState, playing: !videoState.playing })
@@ -113,34 +139,20 @@ const MainVideo = ({videoData}) => {
         );
     }
 
-    const qualityChange = (event) => {
-        setQuality(event.target.value);
-    };
-
-    if (videoData) { // add all video content into arrays
-        for (let i = 0; i < videoData.length; i++) {
-            videoArr.push(videoData[i].url);
-            qualityArr.push(videoData[i].height);
-        }
-    }
-    let video = videoArr[0]
-    
-    // console.log(video)
-    // console.log(videoArr);
-
     return (
         <>
             <div ref={playerContainerRef} className={classes.playerWrapper}>
                 <ReactPlayer id="ReactPlayer"
                     ref={playerRef}
                     className={classes.reactPlayer}
-                    url={video}
+                    url={video.url? video.url : videoArr[videoArr.length - 1]}
                     // controls={true}
                     width="100%" 
                     height="100%"
                     muted={muted}
                     playing={playing}
                     volume={volume}
+                    onStart={resumeWhereLeftOff}
 
                     onProgress={handleProgress}
                 />
@@ -180,21 +192,21 @@ const MainVideo = ({videoData}) => {
                             <Grid container direction="row" alignItems="center">
                                 <IconButton onClick={handlePlayPause} className={classes.bottomIcons}>
                                     {playing? (
-                                    <PauseIcon fontSize="large" />
+                                    <PauseIcon fontSize="medium" />
                                     ) : (
-                                    <PlayArrowIcon fontSize="large" />
+                                    <PlayArrowIcon fontSize="medium" />
                                     )}
                                 </IconButton>
 
                                 <IconButton className={classes.bottomIcons}>
-                                    <AllInclusiveRoundedIcon fontSize="large" />
+                                    <AllInclusiveRoundedIcon fontSize="medium" />
                                 </IconButton>
 
                                 <IconButton onClick={handleMute} className={classes.bottomIcons}>
                                     {muted? (
-                                        <VolumeOffRoundedIcon fontSize="large" />
+                                        <VolumeOffRoundedIcon fontSize="medium" />
                                     ) : (
-                                        <VolumeUpRoundedIcon fontSize="large" />
+                                        <VolumeUpRoundedIcon fontSize="medium" />
                                     )}
                                 </IconButton>
 
@@ -208,7 +220,7 @@ const MainVideo = ({videoData}) => {
                                     onChangeCommitted={handleVolumeSeekUp}
                                     />
 
-                                <Button variant="text" style={{ color: "white", margin: '16px' }}>
+                                <Button variant="text" style={{ color: "white", margin: '0' }}>
                                     <Typography>{elapsedTime}/{totalDuration}</Typography>
                                 </Button>
                             </Grid>
@@ -217,30 +229,32 @@ const MainVideo = ({videoData}) => {
                         {/* Bottom right side */}
 
                         <Grid item>
+                            {!video.quality && (video.quality = qualityArr[qualityArr.length - 1])} {/* this initializes the select bar on load */}
+                            {qualityArr[0] &&
                             <Select
                                 className={classes.bottomIcons}
                                 labelId="demo-simple-select-label"
                                 id="demo-simple-select"
-                                value={quality}
-                                defaultValue={quality}
+                                value={video.quality}
+                                defaultValue={video.quality }
                                 onChange={qualityChange}
                             >
                                 {qualityArr.map((item) => (
                                     <MenuItem value={item}>{item}p</MenuItem>
                                 ))}
-                                
                             </Select>
+                            }
 
                             <IconButton className={classes.bottomIcons}>
-                                <ClosedCaptionIcon fontSize="large"/>
+                                <ClosedCaptionIcon fontSize="medium"/>
                             </IconButton>
 
                             <IconButton onClick={toggleFullScreen} className={classes.bottomIcons}>
-                                <FullscreenIcon fontSize="large"/>
+                                <FullscreenIcon fontSize="medium"/>
                             </IconButton>
 
                             <IconButton className={classes.bottomIcons}>
-                                <PictureInPictureAltIcon fontSize="large"/>
+                                <PictureInPictureAltIcon fontSize="medium"/>
                             </IconButton>
                         </Grid>
                     </Grid>
