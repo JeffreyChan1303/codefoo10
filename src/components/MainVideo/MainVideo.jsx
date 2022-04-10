@@ -35,28 +35,32 @@ const formatTime = (seconds) => {
 }
 
 
-const MainVideo = ({videoData}) => {
+const MainVideo = ({videoData, getVideoData}) => {
     const classes = useStyles();
     const videoArr = [];
     const qualityArr = [];
+
+    console.log(videoData);
+
 
     const playerContainerRef = useRef(null)
     const playerRef = useRef(null);
 
     const [videoState, setVideoState] = useState({
-        playing: true,
-        muted: true,
+        playing: false,
+        muted: false,
         volume: .5,
-        played: 0,
-        loaded: 0,
+        played: null,
+        loaded: null,
         seeking: false,
         video: {
             url: null,
             quality: null,
-            index: 0,
-        }
+            apiIndex: 0,
+        },
+        looping: false,
     });
-    const {playing, muted, volume, played, seeking, video} = videoState;
+    const {playing, muted, volume, played, video, looping} = videoState;
 
     if (videoData) { // add all video content into arrays
         for (let i = 0; i < videoData.length; i++) {
@@ -77,10 +81,11 @@ const MainVideo = ({videoData}) => {
                 url: videoArr[qualityArr.indexOf(e.target.value)],
             }
         });
+        
     };
 
     const resumeWhereLeftOff = () => {
-        playerRef.current.seekTo(videoState.played)
+        playerRef.current.seekTo(videoState.played);
     }
 
 
@@ -90,6 +95,9 @@ const MainVideo = ({videoData}) => {
     const handleMute = () => {
         setVideoState({ ...videoState, muted: !videoState.muted })
     };
+    const handleLoop = () => {
+        setVideoState({ ...videoState, looping: !videoState.looping });
+    }
     const handleVolumeChange = (e, newVolume) => {
         setVideoState({ 
             ...videoState, 
@@ -113,6 +121,7 @@ const MainVideo = ({videoData}) => {
             setVideoState({ ...videoState, ...changeState})
         }
         console.log({...videoState})
+        // console.log(changeState)
     };
 
     const handleProgressSeekChange = (e, newValue) => {
@@ -125,7 +134,16 @@ const MainVideo = ({videoData}) => {
     const handleProgressSeekMouseUp = (e, newValue) => {
         setVideoState({ ...videoState, seeking: false });
         playerRef.current.seekTo(newValue / 100);
+
     };
+
+
+    const handleEnded = () => {
+        if (!videoState.looping) {
+            getVideoData(video.apiIndex + 1, 10)
+            setVideoState({ ...videoState, played: 0, video: { apiIndex: video.apiIndex + 1 } })
+        }
+    }
 
     const currentTime = playerRef.current ? playerRef.current.getCurrentTime() : '00:00';
     const duration = playerRef.current ? playerRef.current.getDuration() : '00:00';
@@ -154,10 +172,14 @@ const MainVideo = ({videoData}) => {
                     height="100%"
                     muted={muted}
                     playing={playing}
+                    loop={looping}
                     volume={volume}
                     onStart={resumeWhereLeftOff}
 
+                    onEnded={handleEnded}
+
                     onProgress={handleProgress}
+                    progressInterval={500}
                 />
                 {/* Top Controls */}
                 <div className={classes.playerControls} >
@@ -203,8 +225,12 @@ const MainVideo = ({videoData}) => {
                                     )}
                                 </IconButton>
 
-                                <IconButton className={classes.bottomIcons}>
-                                    <AllInclusiveRoundedIcon fontSize="medium" />
+                                <IconButton onClick={handleLoop} className={classes.bottomIcons}>
+                                    {looping? (
+                                        <AllInclusiveRoundedIcon fontSize="medium" color="primary" />
+                                    ) : (
+                                        <AllInclusiveRoundedIcon fontSize="medium"/>
+                                    )}
                                 </IconButton>
 
                                 <IconButton onClick={handleMute} className={classes.bottomIcons}>
@@ -268,3 +294,4 @@ const MainVideo = ({videoData}) => {
 }
 
 export default MainVideo;
+

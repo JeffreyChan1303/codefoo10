@@ -16,8 +16,9 @@ const App = () => {
     console.log(video.current);
     console.log(videoArr);
 
-    useEffect(() => {
-        getIGNData()
+
+    const getVideoData = (startIndex, videoCount) => {
+        getIGNData(`http://localhost:3000/videos?startIndex=${startIndex}&count=${videoCount}`)
             .then(({ data }) => {
                 console.log(data);
                 video.current = {url: data[0].assets};
@@ -26,6 +27,10 @@ const App = () => {
             .catch(e => {
                 console.log(e);
             })
+    }
+
+    useEffect(() => {
+        getVideoData(0, 10)
     }, []);
 
     return (
@@ -35,7 +40,10 @@ const App = () => {
             {isMediumDevice? (
                 <Grid container spacing={5} style={{ width: '85%', margin: '0vw auto' }}>
                     <Grid item xs={12} md={8} >
-                        <MainVideo videoData={video.current.url} />
+                        <MainVideo 
+                            getVideoData={getVideoData} 
+                            videoData={video.current.url} 
+                            />
                         <Review />
                     </Grid>
                     <Grid item xs={12} md={4}>
