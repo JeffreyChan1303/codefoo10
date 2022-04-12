@@ -49,5 +49,12 @@ export default makeStyles((theme) => ({
         width: '100%',
         textOverflow: 'ellipsis',
         overflowY: 'hidden',
+    },
+    loadMoreButton: {
+        color: theme.color,
+        width: '90%',
+        margin: '5% 5%',
+        backgroundColor: 'rgb(215, 0, 0)',
+        color: 'white',
     }
 }));

@@ -1,5 +1,5 @@
-import React from 'react';
-import { Grid, Typography } from '@material-ui/core';
+import React, { useState } from 'react';
+import { Grid, Typography, Button } from '@material-ui/core';
 
 
 import useStyles from './styles';
@@ -7,9 +7,14 @@ import useStyles from './styles';
 
 const VideoList = ({videoArr, isMediumDevice}) => {
     const classes = useStyles();
+    const [loadMore, setLoadMore] = useState(false)
     const thumbnailArr = [];
     const titleArr = [];
     const indexArr = [];
+
+    const handleLoadMore = () => {
+        setLoadMore(!loadMore);
+    }
 
     // console.log(videoArr)
     // console.log(isMediumDevice)
@@ -26,8 +31,9 @@ const VideoList = ({videoArr, isMediumDevice}) => {
         <>
         {isMediumDevice? (
         <>
-            {indexArr.map((index) => (
+            {indexArr.map((index) => index < (loadMore? indexArr.length : 4) && (
             <>
+                {index != 0 && <hr style={{opacity: '40%'}} />}
                 <Grid item className={classes.playlistItem} xs={4} md={12}>
                     <div className={classes.playlistImgWrapper}>
                         <a className={classes.playlistLink} href='' > 
@@ -46,16 +52,20 @@ const VideoList = ({videoArr, isMediumDevice}) => {
                         </div>
                     </div>
                 </Grid>
-                {indexArr.length - 1 != index && <hr style={{opacity: '40%'}} />}
             </>
             ))}
+            {!loadMore && 
+                <Button variant="contained" className={classes.loadMoreButton} onClick={handleLoadMore} >
+                    <Typography variant="body1"> Load More </Typography>
+                </Button>
+            }
         </>
         ) : (
         <>
             {indexArr.map((index) => (
             <>
+                {index != 0 && <hr style={{opacity: '40%'}} />}
                 <Grid item className={classes.playlistItem} xs={12} md={12} style={{minWidth: '30vw'}}>
-                    {/* ayyooooo */}
                     <div className={classes.playlistImgWrapper} >
                         <a className={classes.playlistLink} href='' >
                             <img  
@@ -73,7 +83,6 @@ const VideoList = ({videoArr, isMediumDevice}) => {
                         </div>
                     </div>
                 </Grid>
-                {indexArr.length - 1 != index && <hr style={{opacity: '40%'}}/>}
             </>
             ))}
         </>
