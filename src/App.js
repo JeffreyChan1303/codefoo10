@@ -61,7 +61,7 @@ const App = () => {
                         <MainVideo 
                             getVideoData={getVideoData} 
                             videoData={video.current.url}
-                            isMediumDevice={false}
+                            isMediumDevice={isMediumDevice}
                             theaterMode={theaterMode}
                             setTheaterMode={setTheaterMode}
                         />

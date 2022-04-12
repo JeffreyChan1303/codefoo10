@@ -255,9 +255,7 @@ const MainVideo = ({videoData, getVideoData, isMediumDevice, theaterMode, setThe
 
                                 />
 
-                                <Button variant="text" style={{ color: "white", margin: '0' }}>
-                                    <Typography>{elapsedTime}/{totalDuration}</Typography>
-                                </Button>
+                                <Typography style={{color: "white", cursor: 'default', marginLeft: '15px' }} >{elapsedTime}/{totalDuration}</Typography>
                             </Grid>
                         </Grid>
 
@@ -273,7 +271,7 @@ const MainVideo = ({videoData, getVideoData, isMediumDevice, theaterMode, setThe
                                 onChange={qualityChange}
                             >
                                 {qualityArr.map((item) => (
-                                    <MenuItem style={{ zIndex: 2147483647 }} value={item} >{item}p</MenuItem>
+                                    <MenuItem value={item} >{item}p</MenuItem>
                                 ))}
                             </Select>
                             }
@@ -282,7 +280,7 @@ const MainVideo = ({videoData, getVideoData, isMediumDevice, theaterMode, setThe
                                 <ClosedCaptionIcon fontSize="medium"/>
                             </IconButton>
 
-                            {isMediumDevice && !theaterMode? (
+                            {isMediumDevice? (!theaterMode? (
                                 <IconButton onClick={() => setTheaterMode(!theaterMode)} className={classes.bottomIcons}>
                                     <div className={classes.theaterModeButton}>
                                         <ArrowLeftRoundedIcon className={classes.theaterModeLeftArrow} fontSize="small"/>
@@ -297,8 +295,9 @@ const MainVideo = ({videoData, getVideoData, isMediumDevice, theaterMode, setThe
                                     <ArrowLeftRoundedIcon className={classes.theaterModeRightArrow} fontSize="small"/>
                                 </div>
                                 </IconButton>
-                            )
-                            }
+                            )) : (
+                                <></>
+                            )}
 
                             <IconButton onClick={toggleFullScreen} className={classes.bottomIcons} >
                                 {isFullScreen? (

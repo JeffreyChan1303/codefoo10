@@ -8,6 +8,10 @@ export default makeStyles((theme) => ({
         gap: '5%',
         maxHeight: '28.125%',
     },
+    playlistLink: {
+        textDecoration: 'none',
+        color: 'black',
+    },
     playlistImgWrapper: {
         position: 'relative',
         width: '50%',

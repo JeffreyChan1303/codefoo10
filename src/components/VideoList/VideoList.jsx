@@ -30,15 +30,19 @@ const VideoList = ({videoArr, isMediumDevice}) => {
             <>
                 <Grid item className={classes.playlistItem} xs={4} md={12}>
                     <div className={classes.playlistImgWrapper}>
-                        <img  
-                            className={classes.playlistImg} 
-                            src={thumbnailArr[index]} 
-                            alt="image not loaded"
-                        />
+                        <a className={classes.playlistLink} href='' > 
+                            <img  
+                                className={classes.playlistImg} 
+                                src={thumbnailArr[index]} 
+                                alt=''
+                            />
+                        </a>
                     </div>
                     <div className={classes.textContainer} >
                         <div className={classes.textWrapper} >
-                            <Typography className={classes.text} variant="body2">{titleArr[index]}</Typography>
+                            <a className={classes.playlistLink} href=''>
+                                <Typography className={classes.text} variant="body2">{titleArr[index]}</Typography>
+                            </a>
                         </div>
                     </div>
                 </Grid>
@@ -53,15 +57,19 @@ const VideoList = ({videoArr, isMediumDevice}) => {
                 <Grid item className={classes.playlistItem} xs={12} md={12} style={{minWidth: '30vw'}}>
                     {/* ayyooooo */}
                     <div className={classes.playlistImgWrapper} >
-                        <img  
-                            className={classes.playlistImg} 
-                            src={thumbnailArr[index]} 
-                            alt="image not loaded"
-                        />
+                        <a className={classes.playlistLink} href='' >
+                            <img  
+                                className={classes.playlistImg} 
+                                src={thumbnailArr[index]} 
+                                alt=''
+                            />
+                        </a>
                     </div>
                     <div className={classes.textContainer}>
                         <div className={classes.textWrapper} >
-                            <Typography className={classes.text} variant="body2">{titleArr[index]}</Typography>
+                            <a className={classes.playlistLink} href='' >
+                                <Typography className={classes.text} variant="body2">{titleArr[index]}</Typography>
+                            </a>
                         </div>
                     </div>
                 </Grid>
