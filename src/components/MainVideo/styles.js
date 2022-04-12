@@ -26,7 +26,7 @@ export default makeStyles((theme) => ({
         flexDirection: 'column',
         justifyContent: 'space-between',
         zIndex: '1',
-        boxShadow: 'inset 0 -10px 50vw #000000',
+        boxShadow: 'inset 0 -30px 50vw #000000, inset 0 -30px 30vw #000000'
     },
     bottomControls: {
         padding: '0',
@@ -35,22 +35,18 @@ export default makeStyles((theme) => ({
     bottomIcons: {
         color: "white",
     },
-    volumeSlider: {
-        width: '100px',
-    },
     progressBar: {
         width: '90%',
         transform: 'translateX(5%)',
         color: 'white',
         '& .MuiSlider-thumb': {
-            color: 'red',
+            color: 'rgb(215,0,0)',
             border: '3px solid white'
         },
         '& .MuiSlider-rail': {
-            opacity: '20%',
+            opacity: '15%',
         }
     },
-
     progressBufferWrapper: {
         position: 'relative',
         width: '90%',
@@ -60,10 +56,89 @@ export default makeStyles((theme) => ({
     progressBuffer: {
         position: 'absolute', 
         transform: 'translateY(15px)',
-        backgroundColor: 'rgb(120, 0, 0, 1)',
+        backgroundColor: 'rgb(150, 0, 0, 1)',
         top: '0',
         bottom: '0',
         left: '0',
     },
 
+
+
+
+
+
+
+
+    theaterModeButton: {
+        position: 'relative',
+        width: '18px',
+        height: '16px',
+        border: 'solid 1px white',
+        borderRadius: '2px',
+    },
+    theaterModeBridge: {
+        // position: 'absolute',
+        width: '5px',
+        height: '1.75px',
+        backgroundColor: 'white',
+        margin: 'auto',
+        marginTop: '6px',
+        // top: '0',
+        // bottom: '0',
+        // left: '0',
+        // right: '0',
+    },
+    theaterModeLeftArrow: {
+        position: 'absolute',
+        top: '0',
+        bottom: '0',
+        left: '0',
+        right: '0',
+        transform: 'translate(-30%, -15%)',
+    },
+    theaterModeRightArrow: {
+        position: 'absolute',
+        top: '0',
+        bottom: '0',
+        left: '0',
+        right: '0',
+        transform: 'translate(10%, -15%)',
+    },
+
+
+
+    fullScreenOffOuter: {
+        position: 'relative',
+        width: '18px',
+        height: '16px',
+        border: 'solid 1px white',
+        borderRadius: '2px',
+    },
+    fullScreenOffInner: {
+        position: 'absolute',
+        left: '0',
+        bottom: '0',
+        width: '6px',
+        height: '5px',
+        backgroundColor: 'white',
+        borderRadius: '0 1px 0 0'
+    },
+    fullScreenOnOuter: {
+        position: 'relative',
+        width: '18px',
+        height: '16px',
+        border: 'solid 2px white',
+        borderRadius: '3px',
+        backgroundColor: 'white',
+    },
+    fullScreenOnInner: {
+        position: 'absolute',
+        right: '0',
+        top: '0',
+        width: '6px',
+        height: '5px',
+        backgroundColor: 'rgb(215, 0, 0)',
+        borderRadius: '0 1px 0 0',
+        zIndex: '2',
+    }
 }));

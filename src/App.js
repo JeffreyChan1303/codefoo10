@@ -7,6 +7,7 @@ import { Header, MainVideo, Review, VideoList } from './components';
 
 const App = () => {
     const [videoArr, setVideoArr] = useState([]);
+    const [theaterMode, setTheaterMode] = useState(false);
     const video = useRef({url: ''});
 
     const isMediumDevice = useMediaQuery({
@@ -37,12 +38,16 @@ const App = () => {
         <>
             <CssBaseline />
             <Header />
-            {isMediumDevice? (
+            {console.log(!theaterMode)}
+            {isMediumDevice && !theaterMode? (
                 <Grid container spacing={5} style={{ width: '85%', margin: '0vw auto' }}>
                     <Grid item xs={12} md={8} >
                         <MainVideo 
                             getVideoData={getVideoData} 
                             videoData={video.current.url} 
+                            isMediumDevice={true}
+                            theaterMode={theaterMode}
+                            setTheaterMode={setTheaterMode}
                             />
                         <Review />
                     </Grid>
@@ -52,8 +57,14 @@ const App = () => {
                 </Grid>
             ) : (
                 <Grid container spacing={5} style={{ width: '85%', margin: '0vw auto' }}>
-                    <Grid item xs={12} md={8} >
-                        <MainVideo videoData={video.current.url} />
+                    <Grid item xs={12} >
+                        <MainVideo 
+                            getVideoData={getVideoData} 
+                            videoData={video.current.url}
+                            isMediumDevice={false}
+                            theaterMode={theaterMode}
+                            setTheaterMode={setTheaterMode}
+                        />
                     </Grid>
                     <Grid container direction='row' spacing={1} style={{ flexWrap: 'nowrap', overflowX: 'scroll'}}>
                         <VideoList videoArr={videoArr} isMediumDevice={false} />

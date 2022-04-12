@@ -7,10 +7,11 @@ import ReplyRoundedIcon from '@mui/icons-material/ReplyRounded';
 import VolumeUpRoundedIcon from '@mui/icons-material/VolumeUpRounded';
 import VolumeOffRoundedIcon from '@mui/icons-material/VolumeOffRounded';
 import AllInclusiveRoundedIcon from '@mui/icons-material/AllInclusiveRounded';
-import FullscreenIcon from '@mui/icons-material/Fullscreen';
 import ClosedCaptionIcon from '@mui/icons-material/ClosedCaption';
 import PictureInPictureAltIcon from '@mui/icons-material/PictureInPictureAlt';
 import MenuItem from '@mui/material/MenuItem';
+import ArrowLeftRoundedIcon from '@mui/icons-material/ArrowLeftRounded';
+import ArrowRightRoundedIcon from '@mui/icons-material/ArrowRightRounded';
 import screenfull from 'screenfull';
 
 import useStyles from './styles';
@@ -35,13 +36,12 @@ const formatTime = (seconds) => {
 }
 
 
-const MainVideo = ({videoData, getVideoData}) => {
+const MainVideo = ({videoData, getVideoData, isMediumDevice, theaterMode, setTheaterMode}) => {
     const classes = useStyles();
     const videoArr = [];
     const qualityArr = [];
 
     console.log(videoData);
-
 
     const playerContainerRef = useRef(null)
     const playerRef = useRef(null);
@@ -59,8 +59,9 @@ const MainVideo = ({videoData, getVideoData}) => {
             apiIndex: 0,
         },
         looping: false,
+        isFullScreen: false,
     });
-    const {playing, muted, volume, played, video, looping} = videoState;
+    const {playing, muted, volume, played, video, looping, isFullScreen} = videoState;
 
     if (videoData) { // add all video content into arrays
         for (let i = 0; i < videoData.length; i++) {
@@ -113,19 +114,20 @@ const MainVideo = ({videoData, getVideoData}) => {
         }); 
     };
     const toggleFullScreen = () => {
+        setVideoState({ ...videoState, isFullScreen: !videoState.isFullScreen });
         screenfull.toggle(playerContainerRef.current);
     };
     const handleProgress = (changeState) => {
         // console.log(changeState);
         if (!videoState.seeking) {
-            setVideoState({ ...videoState, ...changeState})
+            setVideoState({ ...videoState, ...changeState});
         }
         console.log({...videoState})
         // console.log(changeState)
     };
 
     const handleProgressSeekChange = (e, newValue) => {
-        setVideoState({ ...videoState, played: parseFloat(newValue / 100) })
+        setVideoState({ ...videoState, played: parseFloat(newValue / 100) });
     };
     const handleProgressSeekMouseDown = (e) => {
         setVideoState({ ...videoState, seeking: true });
@@ -246,9 +248,11 @@ const MainVideo = ({videoData, getVideoData}) => {
                                     max={100} 
                                     defaultValue={100}
                                     value={volume * 100} 
-                                    className={classes.volumeSlider}
+                                    className={classes.progressBar}
                                     onChange={handleVolumeChange}
                                     onChangeCommitted={handleVolumeSeekUp}
+                                    style={{ width: "70px"}}
+
                                 />
 
                                 <Button variant="text" style={{ color: "white", margin: '0' }}>
@@ -278,12 +282,34 @@ const MainVideo = ({videoData, getVideoData}) => {
                                 <ClosedCaptionIcon fontSize="medium"/>
                             </IconButton>
 
-                            <IconButton onClick={toggleFullScreen} className={classes.bottomIcons}>
-                                <FullscreenIcon fontSize="medium"/>
-                            </IconButton>
+                            {isMediumDevice && !theaterMode? (
+                                <IconButton onClick={() => setTheaterMode(!theaterMode)} className={classes.bottomIcons}>
+                                    <div className={classes.theaterModeButton}>
+                                        <ArrowLeftRoundedIcon className={classes.theaterModeLeftArrow} fontSize="small"/>
+                                        <div className={classes.theaterModeBridge} />
+                                        <ArrowRightRoundedIcon className={classes.theaterModeRightArrow} fontSize="small"/>
+                                    </div>
+                                </IconButton>
+                            ) : (
+                                <IconButton onClick={() => setTheaterMode(!theaterMode)} className={classes.bottomIcons} >
+                                <div className={classes.theaterModeButton}>
+                                    <ArrowRightRoundedIcon className={classes.theaterModeLeftArrow} fontSize="small"/>
+                                    <ArrowLeftRoundedIcon className={classes.theaterModeRightArrow} fontSize="small"/>
+                                </div>
+                                </IconButton>
+                            )
+                            }
 
-                            <IconButton className={classes.bottomIcons}>
-                                <PictureInPictureAltIcon fontSize="medium"/>
+                            <IconButton onClick={toggleFullScreen} className={classes.bottomIcons} >
+                                {isFullScreen? (
+                                    <div className={classes.fullScreenOnOuter} >
+                                        <div className={classes.fullScreenOnInner} />
+                                    </div>
+                                ) : (
+                                    <div className={classes.fullScreenOffOuter} >
+                                        <div className={classes.fullScreenOffInner} />
+                                    </div>
+                                )}
                             </IconButton>
                         </Grid>
                     </Grid>
