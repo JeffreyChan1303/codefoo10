@@ -17,26 +17,7 @@ import screenfull from 'screenfull';
 import useStyles from './styles';
 
 
-
-// import PauseRoundedIcon from '@mui/icons-material/PauseRounded';
-
-
-const formatTime = (seconds) => {
-    if (isNaN(seconds)) {
-        return '00:00';
-    }
-    const date = new Date(seconds * 1000);
-    const hh = date.getUTCHours();
-    const mm = date.getUTCMinutes();
-    const ss = date.getUTCSeconds().toString().padStart(2, "0");
-    if(hh) {
-        return `${hh}:${mm.toString().padStart(2, "0")}:${ss}`;
-    }
-    return `${mm}:${ss}`;
-}
-
-
-const MainVideo = ({videoData, getVideoData, isMediumDevice, theaterMode, setTheaterMode}) => {
+const MainVideo = ({videoData, getVideoData, isMediumDevice, theaterMode, setTheaterMode, formatTime}) => {
     const classes = useStyles();
     const videoArr = [];
     const qualityArr = [];

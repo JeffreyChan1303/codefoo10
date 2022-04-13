@@ -5,6 +5,21 @@ import { getIGNData } from './api/index';
 
 import { Header, MainVideo, Review, VideoList } from './components';
 
+
+const formatTime = (seconds) => {
+    if (isNaN(seconds)) {
+        return '00:00';
+    }
+    const date = new Date(seconds * 1000);
+    const hh = date.getUTCHours();
+    const mm = date.getUTCMinutes();
+    const ss = date.getUTCSeconds().toString().padStart(2, "0");
+    if(hh) {
+        return `${hh}:${mm.toString().padStart(2, "0")}:${ss}`;
+    }
+    return `${mm}:${ss}`;
+}
+
 const App = () => {
     const [videoArr, setVideoArr] = useState([]);
     const [theaterMode, setTheaterMode] = useState(false);
@@ -48,11 +63,16 @@ const App = () => {
                             isMediumDevice={true}
                             theaterMode={theaterMode}
                             setTheaterMode={setTheaterMode}
+                            formatTime={formatTime}
                             />
                         <Review />
                     </Grid>
                     <Grid item xs={12} md={4}>
-                        <VideoList videoArr={videoArr} isMediumDevice={true} />
+                        <VideoList 
+                            videoArr={videoArr} 
+                            isMediumDevice={true}
+                            formatTime={formatTime}
+                        />
                     </Grid>
                 </Grid>
             ) : (
@@ -64,10 +84,15 @@ const App = () => {
                             isMediumDevice={isMediumDevice}
                             theaterMode={theaterMode}
                             setTheaterMode={setTheaterMode}
+                            formatTime={formatTime}
                         />
                     </Grid>
                     <Grid container direction='row' spacing={1} style={{ flexWrap: 'nowrap', overflowX: 'scroll'}}>
-                        <VideoList videoArr={videoArr} isMediumDevice={false} />
+                        <VideoList 
+                            videoArr={videoArr} 
+                            isMediumDevice={false}
+                            formatTime={formatTime}
+                        />
                     </Grid>
                     <Grid item xs={12} >
                         <Review />

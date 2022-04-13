@@ -29,6 +29,16 @@ export default makeStyles((theme) => ({
         width: '100%',
         height: '100%',
     },
+    videoDurationWrapper: {
+        position: 'absolute',
+        bottom: '2%',
+        right: '2.5%',
+        backgroundColor: 'rgba(40, 40, 40, .75)',
+        padding: '0 5%',
+        color: 'white',
+    },
+    videoDurationText: {
+    },
     textContainer: {
         position: 'relative',
         width: '50%',
