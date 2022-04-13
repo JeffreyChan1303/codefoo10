@@ -17,12 +17,12 @@ import screenfull from 'screenfull';
 import useStyles from './styles';
 
 
-const MainVideo = ({videoData, getVideoData, isMediumDevice, theaterMode, setTheaterMode, formatTime}) => {
+const MainVideo = ({videoData, getVideoData, isMediumDevice, theaterMode, setTheaterMode, formatTime, startIndex, setStartIndex}) => {
     const classes = useStyles();
     const videoArr = [];
     const qualityArr = [];
 
-    console.log(videoData);
+    // console.log(videoData);
 
     const playerContainerRef = useRef(null)
     const playerRef = useRef(null);
@@ -41,13 +41,16 @@ const MainVideo = ({videoData, getVideoData, isMediumDevice, theaterMode, setThe
         },
         looping: false,
         isFullScreen: false,
+        changingQuality: false,
     });
     const {playing, muted, volume, played, video, looping, isFullScreen} = videoState;
 
-    if (videoData) { // add all video content into arrays
-        for (let i = 0; i < videoData.length; i++) {
-            videoArr.push(videoData[i].url);
-            qualityArr.push(videoData[i].height);
+
+    // currently videoData is the array of urls for the sources
+    if (videoData.URLs) { // add all video content into arrays
+        for (let i = 0; i < videoData.URLs.length; i++) {
+            videoArr.push(videoData.URLs[i].url);
+            qualityArr.push(videoData.URLs[i].height);
         }
     }
 
@@ -61,13 +64,17 @@ const MainVideo = ({videoData, getVideoData, isMediumDevice, theaterMode, setThe
             video: { 
                 quality: e.target.value, 
                 url: videoArr[qualityArr.indexOf(e.target.value)],
-            }
+            },
+            changingQuality: true,
         });
         
     };
 
     const resumeWhereLeftOff = () => {
-        playerRef.current.seekTo(videoState.played);
+        if(videoState.changingQuality) {
+            playerRef.current.seekTo(videoState.played);
+            setVideoState({ ...videoState, changingQuality: false })
+        }
     }
 
 
@@ -103,7 +110,7 @@ const MainVideo = ({videoData, getVideoData, isMediumDevice, theaterMode, setThe
         if (!videoState.seeking) {
             setVideoState({ ...videoState, ...changeState});
         }
-        console.log({...videoState})
+        // console.log({...videoState})
         // console.log(changeState)
     };
 
@@ -123,8 +130,7 @@ const MainVideo = ({videoData, getVideoData, isMediumDevice, theaterMode, setThe
 
     const handleEnded = () => {
         if (!videoState.looping) {
-            getVideoData(video.apiIndex + 1, 10)
-            setVideoState({ ...videoState, played: 0, video: { apiIndex: video.apiIndex + 1 } })
+            setStartIndex(startIndex + 1)
         }
     }
 
@@ -167,12 +173,14 @@ const MainVideo = ({videoData, getVideoData, isMediumDevice, theaterMode, setThe
                 {/* Top Controls */}
                 <div className={classes.playerControls} >
                     <Grid container direction="row" alignItems="center" justifyContent="space-between" style={{padding: '16'}}>
-                        <Grid item>
-                            <Typography variant="h6" style={{ color: "#fff" }}>Video Title</Typography>
+                        <Grid item xs={10} >
+                            <Typography className={classes.videoTitle} variant="body1" >{videoData.title}</Typography>
                         </Grid>
 
-                        <Grid item>
-                            <Button variant="contained" color="primary" startIcon={<ReplyRoundedIcon/>}/>
+                        <Grid >
+                            <IconButton className={classes.shareIcon}>
+                                <ReplyRoundedIcon fontSize="large" />
+                            </IconButton>
                         </Grid>
                     </Grid>
 
@@ -258,7 +266,7 @@ const MainVideo = ({videoData, getVideoData, isMediumDevice, theaterMode, setThe
                             }
 
                             <IconButton className={classes.bottomIcons}>
-                                <ClosedCaptionIcon fontSize="medium"/>
+                                <ClosedCaptionIcon backgroundColor="primary" fontSize="medium" />
                             </IconButton>
 
                             {isMediumDevice? (!theaterMode? (

@@ -5,7 +5,7 @@ import { Grid, Typography, Button, duration } from '@material-ui/core';
 import useStyles from './styles';
 
 
-const VideoList = ({videoArr, isMediumDevice, formatTime}) => {
+const VideoList = ({videoArr, isMediumDevice, formatTime, startIndex, setStartIndex}) => {
     const classes = useStyles();
     const [loadMore, setLoadMore] = useState(false)
     const videos = []; 
@@ -26,7 +26,7 @@ const VideoList = ({videoArr, isMediumDevice, formatTime}) => {
             duration: temp.metadata.duration, // inputs the duration of the video
         });
     }
-    console.log(videos)
+    // console.log(videos)
     // console.log(thumbnailArr[0])
 
     return (
@@ -37,25 +37,21 @@ const VideoList = ({videoArr, isMediumDevice, formatTime}) => {
             <>
                 {index != 0 && <hr style={{opacity: '40%'}} />}
                 <Grid item className={classes.playlistItem} xs={4} md={12}>
-                    <div className={classes.playlistImgWrapper}>
-                        <a className={classes.playlistLink} href='' >
-                            <img  
-                                className={classes.playlistImg} 
-                                src={element.thumbnail} 
-                                alt=''
-                            />
-                            <div className={classes.videoDurationWrapper}>
-                                <Typography className={classes.videoDurationText}>{formatTime(element.duration)}</Typography>
-                            </div>
-                        </a>
-                    </div>
-                    <div className={classes.textContainer} >
-                        <div className={classes.textWrapper} >
-                            <a className={classes.playlistLink} href=''>
-                                <Typography className={classes.text} variant="body2">{element.title}</Typography>
-                            </a>
+                    <Button className={classes.playlistImgWrapper} onClick={() => setStartIndex(startIndex + index)}>
+                        <img  
+                            className={classes.playlistImg} 
+                            src={element.thumbnail} 
+                            alt=''
+                        />
+                        <div className={classes.videoDurationWrapper}>
+                            <Typography className={classes.videoDurationText}>{formatTime(element.duration)}</Typography>
                         </div>
-                    </div>
+                    </Button>
+                    <Button className={classes.textContainer} onClick={() => setStartIndex(startIndex + index)}>
+                        <div className={classes.textWrapper} >
+                            <Typography className={classes.text} variant="body2">{element.title}</Typography>
+                        </div>
+                    </Button>
                 </Grid>
             </>
             ))}
@@ -75,8 +71,7 @@ const VideoList = ({videoArr, isMediumDevice, formatTime}) => {
             <>
                 {index != 0 && <hr style={{opacity: '40%'}} />}
                 <Grid item className={classes.playlistItem} xs={12} md={12} style={{minWidth: '30vw'}}>
-                    <div className={classes.playlistImgWrapper} >
-                        <a className={classes.playlistLink} href='' >
+                    <Button className={classes.playlistImgWrapper} onClick={() => setStartIndex(startIndex + index)}>
                             <img  
                                 className={classes.playlistImg} 
                                 src={element.thumbnail} 
@@ -85,15 +80,12 @@ const VideoList = ({videoArr, isMediumDevice, formatTime}) => {
                             <div className={classes.videoDurationWrapper}>
                                 <Typography className={classes.videoDurationText}>{formatTime(element.duration)}</Typography>
                             </div>
-                        </a>
-                    </div>
-                    <div className={classes.textContainer}>
+                    </Button>
+                    <Button className={classes.textContainer} onClick={() => setStartIndex(startIndex + index)}>
                         <div className={classes.textWrapper} >
-                            <a className={classes.playlistLink} href='' >
-                                <Typography className={classes.text} variant="body2">{element.title}</Typography>
-                            </a>
+                            <Typography className={classes.text} variant="body2">{element.title}</Typography>
                         </div>
-                    </div>
+                    </Button>
                 </Grid>
             </>
             ))}

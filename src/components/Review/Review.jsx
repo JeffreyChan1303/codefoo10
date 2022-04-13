@@ -1,12 +1,14 @@
 import React from 'react';
 import useStyles from './styles';
+import { Typography } from '@material-ui/core';
 
-const Review = () => {
+const Review = ({videoData}) => {
     const classes = useStyles();
+    console.log(videoData)
     return (
         <>
-        <h2>Article Title</h2>
-        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempore autem sapiente similique inventore dignissimos. Possimus ratione pariatur repudiandae modi ipsa placeat optio officia! Praesentium facilis quidem voluptatem? Praesentium, quis eum?</p>
+            <Typography className={classes.title} variant="h4">{videoData.title}</Typography>
+            <Typography className={classes.description} variant="h6">{videoData.description}</Typography>
         </>
     );
 }

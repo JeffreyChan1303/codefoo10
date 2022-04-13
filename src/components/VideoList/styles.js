@@ -43,6 +43,8 @@ export default makeStyles((theme) => ({
         position: 'relative',
         width: '50%',
         paddingTop: '28.125%',
+        textAlign: 'left',
+        textTransform: 'none',
     },
     textWrapper: {
         position: 'absolute',

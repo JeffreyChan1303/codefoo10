@@ -23,7 +23,12 @@ const formatTime = (seconds) => {
 const App = () => {
     const [videoArr, setVideoArr] = useState([]);
     const [theaterMode, setTheaterMode] = useState(false);
-    const video = useRef({url: ''});
+    const [startIndex, setStartIndex] = useState(0);
+    const video = useRef({
+        URLs: '',
+        title: '',
+        description: '',
+    });
 
     const isMediumDevice = useMediaQuery({
         query: '(min-width: 960px)'
@@ -37,7 +42,11 @@ const App = () => {
         getIGNData(`http://localhost:3000/videos?startIndex=${startIndex}&count=${videoCount}`)
             .then(({ data }) => {
                 console.log(data);
-                video.current = {url: data[0].assets};
+                video.current = {
+                    URLs: data[0].assets,
+                    title: data[0].metadata.title,
+                    description: data[0].metadata.description,
+                };
                 setVideoArr(data);
             })
             .catch(e => {
@@ -46,8 +55,8 @@ const App = () => {
     }
 
     useEffect(() => {
-        getVideoData(0, 10)
-    }, []);
+        getVideoData(startIndex, 10)
+    }, [startIndex]);
 
     return (
         <>
@@ -55,23 +64,27 @@ const App = () => {
             <Header />
             {console.log(!theaterMode)}
             {isMediumDevice && !theaterMode? (
-                <Grid container spacing={5} style={{ width: '85%', margin: '0vw auto' }}>
+                <Grid container spacing={2} style={{ width: '85%', margin: '0vw auto' }}>
                     <Grid item xs={12} md={8} >
                         <MainVideo 
                             getVideoData={getVideoData} 
-                            videoData={video.current.url} 
+                            videoData={video.current}
                             isMediumDevice={true}
                             theaterMode={theaterMode}
                             setTheaterMode={setTheaterMode}
                             formatTime={formatTime}
+                            startIndex={startIndex}
+                            setStartIndex={setStartIndex}
                             />
-                        <Review />
+                        <Review videoData={video.current} />
                     </Grid>
                     <Grid item xs={12} md={4}>
                         <VideoList 
                             videoArr={videoArr} 
                             isMediumDevice={true}
                             formatTime={formatTime}
+                            startIndex={startIndex}
+                            setStartIndex={setStartIndex}
                         />
                     </Grid>
                 </Grid>
@@ -80,11 +93,13 @@ const App = () => {
                     <Grid item xs={12} >
                         <MainVideo 
                             getVideoData={getVideoData} 
-                            videoData={video.current.url}
+                            videoData={video.current}
                             isMediumDevice={isMediumDevice}
                             theaterMode={theaterMode}
                             setTheaterMode={setTheaterMode}
                             formatTime={formatTime}
+                            startIndex={startIndex}
+                            setStartIndex={setStartIndex}
                         />
                     </Grid>
                     <Grid container direction='row' spacing={1} style={{ flexWrap: 'nowrap', overflowX: 'scroll'}}>
@@ -92,10 +107,12 @@ const App = () => {
                             videoArr={videoArr} 
                             isMediumDevice={false}
                             formatTime={formatTime}
+                            startIndex={startIndex}
+                            setStartIndex={setStartIndex}
                         />
                     </Grid>
                     <Grid item xs={12} >
-                        <Review />
+                        <Review videoData={video.current} />
                     </Grid>
                 </Grid>
             )}

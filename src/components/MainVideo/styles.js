@@ -28,6 +28,17 @@ export default makeStyles((theme) => ({
         zIndex: '1',
         boxShadow: 'inset 0 -30px 50vw #000000, inset 0 -30px 30vw #000000'
     },
+    videoTitle: {
+        color: 'white',
+        margin: '2% 0 2% 4%',
+        textOverflow: 'ellipsis',
+    },
+    shareIcon: {
+        color: 'white',
+        transform: 'scaleX(-1)',
+        right: '0',
+        top: '0',
+    },
     bottomControls: {
         padding: '0',
         // backgroundColor: 'rgba(0,0,0,.20)',
