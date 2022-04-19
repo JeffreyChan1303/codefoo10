@@ -6,12 +6,17 @@ import App from './App';
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#d32f2f',
+      main: 'rgba(191,19,19,255)',
     },
     secondary: {
       main: '#11cb5f',
     },
   },
+  typography: {
+    h6: {
+      fontSize: '.1rem',
+    }
+  }
 });
 console.log(theme)
 

@@ -7,7 +7,7 @@ const Review = ({videoData}) => {
     console.log(videoData)
     return (
         <>
-            <Typography className={classes.title} variant="h4">{videoData.title}</Typography>
+            <Typography className={classes.title} variant="h4" >{videoData.title}</Typography>
             <Typography className={classes.description} variant="h6">{videoData.description}</Typography>
         </>
     );

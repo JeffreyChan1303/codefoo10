@@ -5,14 +5,14 @@ import useStyles from './styles';
 const Header = () => {
     const classes = useStyles();
     return (
-        <AppBar position="static" style={{ backgroundColor: "rgb(255,255,255)" }} className={classes.appBar}>
+        <AppBar position="static" style={{ backgroundColor: "rgba(246,246,249,255)" }} className={classes.appBar}>
             <Toolbar className={classes.toolbar} >
                 <div className={classes.textWrapper} >
-                    <Typography variant="body1" className={classes.sectionTitle}> Section 1 </Typography>
-                    <Typography variant="body1" className={classes.sectionTitle}> Section 1 </Typography>
-                    <Typography variant="body1" className={classes.sectionTitle}> Section 1 </Typography>
-                    <Typography variant="body1" className={classes.sectionTitle}> Section 1 </Typography>
-                    <Typography variant="body1" className={classes.sectionTitle}> Section 1 </Typography>
+                    <Typography variant="body1" className={classes.sectionTitle}> Placeholder </Typography>
+                    <Typography variant="body1" className={classes.sectionTitle}> Placeholder </Typography>
+                    <Typography variant="body1" className={classes.sectionTitle}> Placeholder </Typography>
+                    <Typography variant="body1" className={classes.sectionTitle}> Placeholder </Typography>
+                    <Typography variant="body1" className={classes.sectionTitle}> Placeholder </Typography>
                 </div>
             </Toolbar>
         </AppBar>

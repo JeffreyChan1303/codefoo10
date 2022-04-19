@@ -51,7 +51,7 @@ export default makeStyles((theme) => ({
         transform: 'translateX(5%)',
         color: 'white',
         '& .MuiSlider-thumb': {
-            color: 'rgb(215,0,0)',
+            color: 'rgba(191,19,19,255)',
             border: '3px solid white'
         },
         '& .MuiSlider-rail': {
@@ -77,9 +77,21 @@ export default makeStyles((theme) => ({
 
 
 
-
-
-
+    fourKWrapper: {
+        height: '100%',
+        display: 'flex',
+        // justifyContent: 'center',
+    },
+    fourKBackground: {
+    
+    },
+    closedCaptionBackground: {
+        position: 'absolute',
+        width: '14px',
+        height: '14px',
+        zIndex: '-1',
+        backgroundColor: 'rgba(215,19,19,255)',
+    },
     theaterModeButton: {
         position: 'relative',
         width: '18px',

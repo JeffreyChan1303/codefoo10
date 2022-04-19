@@ -66,7 +66,11 @@ export default makeStyles((theme) => ({
         color: theme.color,
         width: '90%',
         margin: '5% 5%',
-        backgroundColor: 'rgb(215, 0, 0)',
+        backgroundColor: 'rgba(191,19,19,255)',
         color: 'white',
+    },
+    loadMoreButtonText: {
+        fontWeight: theme.typography.fontWeightBold,
+        textTransform: 'none',
     }
 }));

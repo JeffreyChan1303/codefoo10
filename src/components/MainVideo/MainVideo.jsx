@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ReactPlayer from 'react-player';
-import { Button, Slider, Grid, Typography, IconButton, Select, Tooltip } from '@material-ui/core';
+import { Button, Slider, Grid, Typography, IconButton, Select, Tooltip, Popover } from '@material-ui/core';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import PauseIcon from '@mui/icons-material/Pause';
 import ReplyRoundedIcon from '@mui/icons-material/ReplyRounded';
@@ -12,6 +12,7 @@ import PictureInPictureAltIcon from '@mui/icons-material/PictureInPictureAlt';
 import MenuItem from '@mui/material/MenuItem';
 import ArrowLeftRoundedIcon from '@mui/icons-material/ArrowLeftRounded';
 import ArrowRightRoundedIcon from '@mui/icons-material/ArrowRightRounded';
+import FourKRoundedIcon from '@mui/icons-material/FourKRounded';
 import screenfull from 'screenfull';
 
 import useStyles from './styles';
@@ -33,7 +34,6 @@ const MainVideo = ({videoData, getVideoData, isMediumDevice, theaterMode, setThe
         volume: .5,
         played: null,
         loaded: null,
-        seeking: false,
         video: {
             url: null,
             quality: null,
@@ -105,12 +105,15 @@ const MainVideo = ({videoData, getVideoData, isMediumDevice, theaterMode, setThe
         setVideoState({ ...videoState, isFullScreen: !videoState.isFullScreen });
         screenfull.toggle(playerContainerRef.current);
     };
+
+
+    const [seeking, setSeeking] = useState(false); // I put this separately because it didn't work for some reason w hen it was a property of the videoState object.
     const handleProgress = (changeState) => {
         // console.log(changeState);
-        if (!videoState.seeking) {
+        if (!seeking) {
             setVideoState({ ...videoState, ...changeState});
         }
-        // console.log({...videoState})
+        console.log(seeking)
         // console.log(changeState)
     };
 
@@ -118,15 +121,16 @@ const MainVideo = ({videoData, getVideoData, isMediumDevice, theaterMode, setThe
         setVideoState({ ...videoState, played: parseFloat(newValue / 100) });
     };
     const handleProgressSeekMouseDown = (e) => {
-        setVideoState({ ...videoState, seeking: true });
+        console.log(seeking)
+        setSeeking(true);
+        console.log(seeking)
     };
 
     const handleProgressSeekMouseUp = (e, newValue) => {
-        setVideoState({ ...videoState, seeking: false });
+        setSeeking(false);
         playerRef.current.seekTo(newValue / 100);
 
     };
-
 
     const handleEnded = () => {
         if (!videoState.looping) {
@@ -148,6 +152,20 @@ const MainVideo = ({videoData, getVideoData, isMediumDevice, theaterMode, setThe
           </Tooltip>
         );
     }
+
+    // quality change with popup TEST
+    const [anchorEl, setAnchorEl] = React.useState(null);
+
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
+    const open = Boolean(anchorEl);
+    const id = open ? 'simple-popover' : undefined;
 
     return (
         <>
@@ -251,6 +269,30 @@ const MainVideo = ({videoData, getVideoData, isMediumDevice, theaterMode, setThe
                         {/* Bottom right side */}
 
                         <Grid item>
+                            <Button aria-describedby={id} variant="text" onClick={handleClick}>
+                                <Typography variant="h6" style={{ fontWeight: "bold", color: "white", marginTop: "1px"}}>HD</Typography>
+                                <div className={classes.fourKWrapper} >
+                                    <FourKRoundedIcon fontSize="medium" color="primary"/>
+                                    <div className={classes.fourKBackground} />
+                                </div>
+                            </Button>
+                            <Popover 
+                                container={playerContainerRef.current}
+                                id={id}
+                                open={open}
+                                anchorEl={anchorEl}
+                                onClose={handleClose}
+                                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                                transformOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+                                //style={{ width: '100px', height: '100px' }}
+                            >
+                                <Grid container direction="column">
+                                    {qualityArr.map((item) => (
+                                        <Button onClick={qualityChange} style={{ textTransform: "none" }}>{item}p</Button>
+                                    ))}
+                                </Grid>
+                            </Popover>
+
                             {!video.quality && (video.quality = qualityArr[qualityArr.length - 1])} {/* this initializes the select bar on load */}
                             {qualityArr[0] &&
                             <Select 
@@ -267,6 +309,7 @@ const MainVideo = ({videoData, getVideoData, isMediumDevice, theaterMode, setThe
 
                             <IconButton className={classes.bottomIcons}>
                                 <ClosedCaptionIcon backgroundColor="primary" fontSize="medium" />
+                                <div className={classes.closedCaptionBackground} />
                             </IconButton>
 
                             {isMediumDevice? (!theaterMode? (

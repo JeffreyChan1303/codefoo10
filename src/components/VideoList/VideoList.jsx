@@ -57,11 +57,11 @@ const VideoList = ({videoArr, isMediumDevice, formatTime, startIndex, setStartIn
             ))}
             {loadMore? (
                 <Button variant="contained" className={classes.loadMoreButton} onClick={handleLoadMore} >
-                    <Typography variant="body1"> Show Less </Typography>
+                    <Typography variant="body1" className={classes.loadMoreButtonText} > Show Less </Typography>
                 </Button>
             ) : (
                 <Button variant="contained" className={classes.loadMoreButton} onClick={handleLoadMore} >
-                    <Typography variant="body1"> Load More </Typography>
+                    <Typography variant="body1" className={classes.loadMoreButtonText} > Load More </Typography>
                 </Button>
             )}
         </>
