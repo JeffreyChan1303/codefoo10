@@ -59,11 +59,11 @@ const MainVideo = ({videoData, getVideoData, isMediumDevice, theaterMode, setThe
     // console.log(video)
     // console.log(qualityArr);
 
-    const qualityChange = (e) => {
+    const qualityChange = (quality, index) => {
         setVideoState({ ...videoState,
             video: { 
-                quality: e.target.value, 
-                url: videoArr[qualityArr.indexOf(e.target.value)],
+                quality: quality,
+                url: videoArr[index],
             },
             changingQuality: true,
         });
@@ -154,13 +154,13 @@ const MainVideo = ({videoData, getVideoData, isMediumDevice, theaterMode, setThe
     }
 
     // quality change with popup TEST
-    const [anchorEl, setAnchorEl] = React.useState(null);
+    const [anchorEl, setAnchorEl] = useState(null);
 
-    const handleClick = (event) => {
+    const handlePopoverClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
 
-    const handleClose = () => {
+    const handlePopoverClose = () => {
         setAnchorEl(null);
     };
 
@@ -269,7 +269,7 @@ const MainVideo = ({videoData, getVideoData, isMediumDevice, theaterMode, setThe
                         {/* Bottom right side */}
 
                         <Grid item>
-                            <Button aria-describedby={id} variant="text" onClick={handleClick}>
+                            <Button aria-describedby={id} variant="text" onClick={handlePopoverClick}>
                                 <Typography variant="h6" style={{ fontWeight: "bold", color: "white", marginTop: "1px"}}>HD</Typography>
                                 <div className={classes.fourKWrapper} >
                                     <FourKRoundedIcon fontSize="medium" color="primary"/>
@@ -279,33 +279,24 @@ const MainVideo = ({videoData, getVideoData, isMediumDevice, theaterMode, setThe
                             <Popover 
                                 container={playerContainerRef.current}
                                 id={id}
+                                className={classes.popover}
                                 open={open}
                                 anchorEl={anchorEl}
-                                onClose={handleClose}
+                                onClose={handlePopoverClose}
                                 anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
                                 transformOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-                                //style={{ width: '100px', height: '100px' }}
                             >
-                                <Grid container direction="column">
-                                    {qualityArr.map((item) => (
-                                        <Button onClick={qualityChange} style={{ textTransform: "none" }}>{item}p</Button>
+                                <Grid container direction="column" >
+                                    {qualityArr.map((item, index) => (
+                                        <Button onClick={() => qualityChange(item, index)} className={classes.popoverButtons} variant="contained" >
+                                            <Typography variant="body1">
+                                                {item}p
+                                            </Typography>
+                                        </Button>
                                     ))}
                                 </Grid>
                             </Popover>
-
-                            {!video.quality && (video.quality = qualityArr[qualityArr.length - 1])} {/* this initializes the select bar on load */}
-                            {qualityArr[0] &&
-                            <Select 
-                                className={classes.bottomIcons} // this has issue when in fullscreen
-                                value={video.quality}
-                                defaultValue={video.quality }
-                                onChange={qualityChange}
-                            >
-                                {qualityArr.map((item) => (
-                                    <MenuItem value={item} >{item}p</MenuItem>
-                                ))}
-                            </Select>
-                            }
+                            
 
                             <IconButton className={classes.bottomIcons}>
                                 <ClosedCaptionIcon backgroundColor="primary" fontSize="medium" />

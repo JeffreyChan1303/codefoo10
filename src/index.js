@@ -11,10 +11,12 @@ const theme = createTheme({
     secondary: {
       main: '#11cb5f',
     },
+    qualityHoverColor: {
+      main: 'rgb(200, 100, 100, .5)',
+    }
   },
   typography: {
     h6: {
-      fontSize: '.1rem',
     }
   }
 });

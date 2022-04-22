@@ -68,6 +68,9 @@ export default makeStyles((theme) => ({
         margin: '5% 5%',
         backgroundColor: 'rgba(191,19,19,255)',
         color: 'white',
+        '&:hover': {
+            backgroundColor: 'black',
+        }
     },
     loadMoreButtonText: {
         fontWeight: theme.typography.fontWeightBold,

@@ -89,8 +89,8 @@ const App = () => {
                     </Grid>
                 </Grid>
             ) : (
-                <Grid container spacing={5} style={{ width: '85%', margin: '0vw auto' }}>
-                    <Grid item xs={12} >
+                <Grid container spacing={0} style={{ width: '90%', margin: '0vw auto' }}>
+                    <Grid item xs={12} style={{ padding: '0 0 2em'}}>
                         <MainVideo 
                             getVideoData={getVideoData} 
                             videoData={video.current}

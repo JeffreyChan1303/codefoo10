@@ -78,12 +78,32 @@ export default makeStyles((theme) => ({
 
 
     fourKWrapper: {
-        height: '100%',
+        position: 'relative',
         display: 'flex',
-        // justifyContent: 'center',
     },
     fourKBackground: {
-    
+        position: 'absolute',
+        width: '50%',
+        height: '50%',
+        top: '50%',
+        left: '50%',
+        transform: 'translate3d(-50%, -50%, 0)',
+        backgroundColor: 'white',
+        zIndex: '-1',
+    },
+    popover: {
+        '& .MuiPopover-paper': {
+            background: 'none',
+        },
+    },
+    popoverButtons: {
+        color: 'white',
+        backgroundColor: 'rgba(27, 27, 27, .9)',
+        textTransform: 'none',
+        '&:hover': {
+            backgroundColor: 'rgba(50, 50, 50, 1)',
+        },
+        borderRadius: '0',
     },
     closedCaptionBackground: {
         position: 'absolute',
