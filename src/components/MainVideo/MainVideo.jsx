@@ -37,7 +37,7 @@ const MainVideo = ({videoData, getVideoData, isMediumDevice, theaterMode, setThe
         video: {
             url: null,
             quality: null,
-            apiIndex: 0,
+            qualityIndex: null,
         },
         looping: false,
         isFullScreen: false,
@@ -47,27 +47,42 @@ const MainVideo = ({videoData, getVideoData, isMediumDevice, theaterMode, setThe
 
 
     // currently videoData is the array of urls for the sources
-    if (videoData.URLs) { // add all video content into arrays
+    // if (videoData.URLs) { // add all video content into arrays
         for (let i = 0; i < videoData.URLs.length; i++) {
             videoArr.push(videoData.URLs[i].url);
             qualityArr.push(videoData.URLs[i].height);
         }
-    }
+    // }
 
     
     
-    // console.log(video)
-    // console.log(qualityArr);
+    console.log(videoState.video)
+    console.log(videoData);
+    console.log(videoArr)
+    
+    // const qualityChange = (e) => {
+    //     setVideoState({ ...videoState,
+    //         video: { 
+    //             quality: e.target.value, 
+    //             url: videoArr[qualityArr.indexOf(e.target.value)],
+    //             qualityIndex: qualityArr.indexOf(e.target.value),
+    //         },
+    //         changingQuality: true,
+    //     });
+    // };
 
     const qualityChange = (quality, index) => {
+        console.log(index);
+        console.log(quality);
         setVideoState({ ...videoState,
             video: { 
                 quality: quality,
                 url: videoArr[index],
+                qualityIndex: index,
             },
             changingQuality: true,
         });
-        
+        handlePopoverClose();
     };
 
     const resumeWhereLeftOff = () => {
@@ -113,17 +128,13 @@ const MainVideo = ({videoData, getVideoData, isMediumDevice, theaterMode, setThe
         if (!seeking) {
             setVideoState({ ...videoState, ...changeState});
         }
-        console.log(seeking)
-        // console.log(changeState)
     };
 
     const handleProgressSeekChange = (e, newValue) => {
         setVideoState({ ...videoState, played: parseFloat(newValue / 100) });
     };
     const handleProgressSeekMouseDown = (e) => {
-        console.log(seeking)
         setSeeking(true);
-        console.log(seeking)
     };
 
     const handleProgressSeekMouseUp = (e, newValue) => {
@@ -154,7 +165,7 @@ const MainVideo = ({videoData, getVideoData, isMediumDevice, theaterMode, setThe
     }
 
     // quality change with popup TEST
-    const [anchorEl, setAnchorEl] = useState(null);
+    const [anchorEl, setAnchorEl] = React.useState(null);
 
     const handlePopoverClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -173,8 +184,10 @@ const MainVideo = ({videoData, getVideoData, isMediumDevice, theaterMode, setThe
                 <ReactPlayer id="ReactPlayer"
                     ref={playerRef}
                     className={classes.reactPlayer}
-                    url={video.url? video.url : videoArr[videoArr.length - 1]}
-                    // controls={true}
+                    // url={videoState.url? videoState.video.url : videoArr[videoArr.length - 1]}
+                    url={video.url? videoArr[videoState.video.qualityIndex] : videoArr[videoArr.length - 1]}                   
+                    
+
                     width="100%" 
                     height="100%"
                     muted={muted}
@@ -289,6 +302,7 @@ const MainVideo = ({videoData, getVideoData, isMediumDevice, theaterMode, setThe
                                 <Grid container direction="column" >
                                     {qualityArr.map((item, index) => (
                                         <Button onClick={() => qualityChange(item, index)} className={classes.popoverButtons} variant="contained" >
+                                            {item === videoState.video.quality && <Typography variant="body1">-&nbsp;</Typography>}
                                             <Typography variant="body1">
                                                 {item}p
                                             </Typography>
@@ -296,10 +310,24 @@ const MainVideo = ({videoData, getVideoData, isMediumDevice, theaterMode, setThe
                                     ))}
                                 </Grid>
                             </Popover>
+
+                            {!video.quality && (video.quality = qualityArr[qualityArr.length - 1])} {/* this initializes the select bar on load */}
+                            {qualityArr[0] &&
+                            <Select 
+                                className={classes.bottomIcons} // this has issue when in fullscreen
+                                value={video.quality}
+                                defaultValue={video.quality }
+                                onChange={qualityChange}
+                            >
+                                {qualityArr.map((item) => (
+                                    <MenuItem value={item} >{item}p</MenuItem>
+                                ))}
+                            </Select>
+                            }
                             
 
                             <IconButton className={classes.bottomIcons}>
-                                <ClosedCaptionIcon backgroundColor="primary" fontSize="medium" />
+                                <ClosedCaptionIcon fontSize="medium" />
                                 <div className={classes.closedCaptionBackground} />
                             </IconButton>
 

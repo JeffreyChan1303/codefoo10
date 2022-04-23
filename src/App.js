@@ -62,7 +62,6 @@ const App = () => {
         <>
             <CssBaseline />
             <Header />
-            {console.log(!theaterMode)}
             {isMediumDevice && !theaterMode? (
                 <Grid container spacing={2} style={{ width: '85%', margin: '0vw auto' }}>
                     <Grid item xs={12} md={8} >

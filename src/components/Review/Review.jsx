@@ -4,7 +4,7 @@ import { Typography } from '@material-ui/core';
 
 const Review = ({videoData}) => {
     const classes = useStyles();
-    console.log(videoData)
+    // console.log(videoData)
     return (
         <>
             <Typography className={classes.title} variant="h4" >{videoData.title}</Typography>
