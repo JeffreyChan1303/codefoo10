@@ -1,24 +1,23 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ReactPlayer from 'react-player';
 import { Button, Slider, Grid, Typography, IconButton, Select, Tooltip, Popover } from '@material-ui/core';
-import PlayArrowIcon from '@mui/icons-material/PlayArrow';
-import PauseIcon from '@mui/icons-material/Pause';
-import ReplyRoundedIcon from '@mui/icons-material/ReplyRounded';
-import VolumeUpRoundedIcon from '@mui/icons-material/VolumeUpRounded';
-import VolumeOffRoundedIcon from '@mui/icons-material/VolumeOffRounded';
-import AllInclusiveRoundedIcon from '@mui/icons-material/AllInclusiveRounded';
-import ClosedCaptionIcon from '@mui/icons-material/ClosedCaption';
-import PictureInPictureAltIcon from '@mui/icons-material/PictureInPictureAlt';
-import MenuItem from '@mui/material/MenuItem';
-import ArrowLeftRoundedIcon from '@mui/icons-material/ArrowLeftRounded';
-import ArrowRightRoundedIcon from '@mui/icons-material/ArrowRightRounded';
-import FourKRoundedIcon from '@mui/icons-material/FourKRounded';
+import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+import PauseIcon from '@material-ui/icons/Pause';
+import ReplyRoundedIcon from '@material-ui/icons/ReplyRounded';
+import VolumeUpRoundedIcon from '@material-ui/icons/VolumeUpRounded';
+import VolumeOffRoundedIcon from '@material-ui/icons/VolumeOffRounded';
+import AllInclusiveRoundedIcon from '@material-ui/icons/AllInclusiveRounded';
+import ClosedCaptionIcon from '@material-ui/icons/ClosedCaption';
+import ArrowLeftRoundedIcon from '@material-ui/icons/ArrowLeftRounded';
+import ArrowRightRoundedIcon from '@material-ui/icons/ArrowRightRounded';
+
+import FourKRoundedIcon from '@material-ui/icons/FourKRounded';
 import screenfull from 'screenfull';
 
 import useStyles from './styles';
 
 
-const MainVideo = ({videoData, getVideoData, isMediumDevice, theaterMode, setTheaterMode, formatTime, startIndex, setStartIndex}) => {
+const MainVideo = ({ videoData, getVideoData, isMediumDevice, theaterMode, setTheaterMode, formatTime, startIndex, setStartIndex, isSmallDevice }) => {
     const classes = useStyles();
     const videoArr = [];
     const qualityArr = [];
@@ -56,20 +55,11 @@ const MainVideo = ({videoData, getVideoData, isMediumDevice, theaterMode, setThe
 
     
     
-    console.log(videoState.video)
-    console.log(videoData);
-    console.log(videoArr)
+    // console.log(videoState.video)
+    // console.log(videoData);
+    // console.log(videoArr)
+
     
-    // const qualityChange = (e) => {
-    //     setVideoState({ ...videoState,
-    //         video: { 
-    //             quality: e.target.value, 
-    //             url: videoArr[qualityArr.indexOf(e.target.value)],
-    //             qualityIndex: qualityArr.indexOf(e.target.value),
-    //         },
-    //         changingQuality: true,
-    //     });
-    // };
 
     const qualityChange = (quality, index) => {
         console.log(index);
@@ -164,15 +154,32 @@ const MainVideo = ({videoData, getVideoData, isMediumDevice, theaterMode, setThe
         );
     }
 
+    function disableScroll() {
+        // Get the current page scroll position
+
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+      
+            // if any scroll is attempted, set this to the previous value
+            window.onscroll = function() {
+                window.scrollTo(scrollLeft, scrollTop);
+            };
+    }
+      
+    function enableScroll() {
+        window.onscroll = function() {};
+    }
     // quality change with popup TEST
     const [anchorEl, setAnchorEl] = React.useState(null);
 
     const handlePopoverClick = (event) => {
         setAnchorEl(event.currentTarget);
+        disableScroll();
     };
 
     const handlePopoverClose = () => {
         setAnchorEl(null);
+        enableScroll();
     };
 
     const open = Boolean(anchorEl);
@@ -205,7 +212,7 @@ const MainVideo = ({videoData, getVideoData, isMediumDevice, theaterMode, setThe
                 <div className={classes.playerControls} >
                     <Grid container direction="row" alignItems="center" justifyContent="space-between" style={{padding: '16'}}>
                         <Grid item xs={10} >
-                            <Typography className={classes.videoTitle} variant="body1" >{videoData.title}</Typography>
+                            <Typography className={classes.videoTitle} variant="h6" >{videoData.title}</Typography>
                         </Grid>
 
                         <Grid >
@@ -263,19 +270,24 @@ const MainVideo = ({videoData, getVideoData, isMediumDevice, theaterMode, setThe
                                     )}
                                 </IconButton>
 
-                                <Slider 
-                                    min={0} 
-                                    max={100} 
-                                    defaultValue={100}
-                                    value={volume * 100} 
-                                    className={classes.progressBar}
-                                    onChange={handleVolumeChange}
-                                    onChangeCommitted={handleVolumeSeekUp}
-                                    style={{ width: "70px"}}
+                                <div style={{ width: '15vw', maxWidth: '80px', display: 'flex' }}>
+                                    <Slider 
+                                        min={0} 
+                                        max={100} 
+                                        defaultValue={100}
+                                        value={volume * 100} 
+                                        className={classes.progressBar}
+                                        onChange={handleVolumeChange}
+                                        onChangeCommitted={handleVolumeSeekUp}
+                                        // style={isSmallDevice? { width: "40px" } : { width: "70px"}}
+                                    />
+                                </div>
 
-                                />
-
-                                <Typography style={{color: "white", cursor: 'default', marginLeft: '15px' }} >{elapsedTime}/{totalDuration}</Typography>
+                                { !isSmallDevice &&
+                                <Typography style={{color: "white", cursor: 'default', marginLeft: '15px' }} >
+                                    {elapsedTime}/{totalDuration}
+                                </Typography>
+                                }
                             </Grid>
                         </Grid>
 
@@ -285,7 +297,7 @@ const MainVideo = ({videoData, getVideoData, isMediumDevice, theaterMode, setThe
                             <Button aria-describedby={id} variant="text" onClick={handlePopoverClick}>
                                 <Typography variant="h6" style={{ fontWeight: "bold", color: "white", marginTop: "1px"}}>HD</Typography>
                                 <div className={classes.fourKWrapper} >
-                                    <FourKRoundedIcon fontSize="medium" color="primary"/>
+                                    <FourKRoundedIcon fontSize="medium" color="primary" />
                                     <div className={classes.fourKBackground} />
                                 </div>
                             </Button>
@@ -299,7 +311,7 @@ const MainVideo = ({videoData, getVideoData, isMediumDevice, theaterMode, setThe
                                 anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
                                 transformOrigin={{ vertical: 'bottom', horizontal: 'center' }}
                             >
-                                <Grid container direction="column" >
+                                <Grid container direction="column" style={{ position: 'sticky' }}>
                                     {qualityArr.map((item, index) => (
                                         <Button onClick={() => qualityChange(item, index)} className={classes.popoverButtons} variant="contained" >
                                             {item === videoState.video.quality && <Typography variant="body1">-&nbsp;</Typography>}
@@ -311,25 +323,12 @@ const MainVideo = ({videoData, getVideoData, isMediumDevice, theaterMode, setThe
                                 </Grid>
                             </Popover>
 
-                            {!video.quality && (video.quality = qualityArr[qualityArr.length - 1])} {/* this initializes the select bar on load */}
-                            {qualityArr[0] &&
-                            <Select 
-                                className={classes.bottomIcons} // this has issue when in fullscreen
-                                value={video.quality}
-                                defaultValue={video.quality }
-                                onChange={qualityChange}
-                            >
-                                {qualityArr.map((item) => (
-                                    <MenuItem value={item} >{item}p</MenuItem>
-                                ))}
-                            </Select>
-                            }
-                            
-
+                            {!isSmallDevice &&
                             <IconButton className={classes.bottomIcons}>
                                 <ClosedCaptionIcon fontSize="medium" />
                                 <div className={classes.closedCaptionBackground} />
                             </IconButton>
+                            }
 
                             {isMediumDevice? (!theaterMode? (
                                 <IconButton onClick={() => setTheaterMode(!theaterMode)} className={classes.bottomIcons}>

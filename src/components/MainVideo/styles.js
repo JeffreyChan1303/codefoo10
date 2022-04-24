@@ -34,6 +34,7 @@ export default makeStyles((theme) => ({
         textOverflow: 'ellipsis',
     },
     shareIcon: {
+        position: 'absolute',
         color: 'white',
         transform: 'scaleX(-1)',
         right: '0',

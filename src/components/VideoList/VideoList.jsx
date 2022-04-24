@@ -5,7 +5,7 @@ import { Grid, Typography, Button, duration } from '@material-ui/core';
 import useStyles from './styles';
 
 
-const VideoList = ({videoArr, isMediumDevice, formatTime, startIndex, setStartIndex}) => {
+const VideoList = ({videoArr, isMediumDevice, formatTime, startIndex, setStartIndex, isSmallDevice }) => {
     const classes = useStyles();
     const [loadMore, setLoadMore] = useState(false)
     const videos = []; 
@@ -71,7 +71,7 @@ const VideoList = ({videoArr, isMediumDevice, formatTime, startIndex, setStartIn
             <>
                 {index != 0 && <hr style={{opacity: '40%'}} />}
                 <Grid item className={classes.playlistItem} xs={12} md={12} style={{minWidth: '30vw'}}>
-                    <Button className={classes.playlistImgWrapper} onClick={() => setStartIndex(startIndex + index)}>
+                    <Button className={classes.playlistImgWrapper} style={isSmallDevice? { width: '100%', paddingTop: "56.25%" } : {}} onClick={() => setStartIndex(startIndex + index)}>
                             <img  
                                 className={classes.playlistImg} 
                                 src={element.thumbnail} 
@@ -81,11 +81,14 @@ const VideoList = ({videoArr, isMediumDevice, formatTime, startIndex, setStartIn
                                 <Typography className={classes.videoDurationText}>{formatTime(element.duration)}</Typography>
                             </div>
                     </Button>
+
+                    {!isSmallDevice && 
                     <Button className={classes.textContainer} onClick={() => setStartIndex(startIndex + index)}>
                         <div className={classes.textWrapper} >
                             <Typography className={classes.text} variant="body2">{element.title}</Typography>
                         </div>
                     </Button>
+                    }
                 </Grid>
             </>
             ))}

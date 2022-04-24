@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { CssBaseline, Grid, Popover } from '@material-ui/core';
+import { CssBaseline, Grid } from '@material-ui/core';
 import { useMediaQuery } from 'react-responsive';
 import { getIGNData } from './api/index';
 
 import { Header, MainVideo, Review, VideoList } from './components';
+
 
 
 const formatTime = (seconds) => {
@@ -31,7 +32,10 @@ const App = () => {
     });
 
     const isMediumDevice = useMediaQuery({
-        query: '(min-width: 960px)'
+        query: '(min-width: 960px)',
+    })
+    const isSmallDevice = useMediaQuery({
+        query: '(max-width: 550px)',
     })
 
     console.log(video.current);
@@ -88,7 +92,7 @@ const App = () => {
                     </Grid>
                 </Grid>
             ) : (
-                <Grid container spacing={0} style={{ width: '90%', margin: '0vw auto' }}>
+                <Grid container spacing={0} style={isSmallDevice? { width: '98%', margin: '0 auto' } : { width: '90%', margin: '0vw auto' }}>
                     <Grid item xs={12} style={{ padding: '0 0 2em'}}>
                         <MainVideo 
                             getVideoData={getVideoData} 
@@ -99,6 +103,7 @@ const App = () => {
                             formatTime={formatTime}
                             startIndex={startIndex}
                             setStartIndex={setStartIndex}
+                            isSmallDevice={isSmallDevice}
                         />
                     </Grid>
                     <Grid container direction='row' spacing={1} style={{ flexWrap: 'nowrap', overflowX: 'scroll'}}>
@@ -108,6 +113,7 @@ const App = () => {
                             formatTime={formatTime}
                             startIndex={startIndex}
                             setStartIndex={setStartIndex}
+                            isSmallDevice={isSmallDevice}
                         />
                     </Grid>
                     <Grid item xs={12} >

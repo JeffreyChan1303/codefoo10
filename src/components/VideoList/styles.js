@@ -15,7 +15,6 @@ export default makeStyles((theme) => ({
     playlistImgWrapper: {
         position: 'relative',
         width: '50%',
-        height: '28.125%',
         paddingTop: '28.125%',
         borderRadius: '7px',
         overflow: 'hidden',
@@ -69,7 +68,7 @@ export default makeStyles((theme) => ({
         backgroundColor: 'rgba(191,19,19,255)',
         color: 'white',
         '&:hover': {
-            backgroundColor: 'black',
+            backgroundColor: 'rgba(160, 50, 50, 255)',
         }
     },
     loadMoreButtonText: {
