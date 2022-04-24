@@ -16,6 +16,7 @@ import screenfull from 'screenfull';
 
 import useStyles from './styles';
 
+let count = 0;
 
 const MainVideo = ({ videoData, getVideoData, isMediumDevice, theaterMode, setTheaterMode, formatTime, startIndex, setStartIndex, isSmallDevice }) => {
     const classes = useStyles();
@@ -26,6 +27,7 @@ const MainVideo = ({ videoData, getVideoData, isMediumDevice, theaterMode, setTh
 
     const playerContainerRef = useRef(null)
     const playerRef = useRef(null);
+    const controlsRef = useRef(null);
 
     const [videoState, setVideoState] = useState({
         playing: false,
@@ -115,6 +117,18 @@ const MainVideo = ({ videoData, getVideoData, isMediumDevice, theaterMode, setTh
     const [seeking, setSeeking] = useState(false); // I put this separately because it didn't work for some reason w hen it was a property of the videoState object.
     const handleProgress = (changeState) => {
         // console.log(changeState);
+        console.log(count);
+        console.log(controlsRef.current.style.visibility)
+        if (count > 3) {
+            controlsRef.current.style.visibility = "hidden";
+            count = 0;
+        }
+
+        if (controlsRef.current.style.visibility == "visible") {
+            console.log('booty')
+            count += 1;
+        }
+
         if (!seeking) {
             setVideoState({ ...videoState, ...changeState});
         }
@@ -182,12 +196,22 @@ const MainVideo = ({ videoData, getVideoData, isMediumDevice, theaterMode, setTh
         enableScroll();
     };
 
+    const handleMouseMove = () => {
+        console.log('yes')
+        controlsRef.current.style.visibility = "visible";
+        count = 0;
+    }
+
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
 
     return (
         <>
-            <div ref={playerContainerRef} className={classes.playerWrapper}>
+            <div 
+                ref={playerContainerRef} 
+                className={classes.playerWrapper}
+                onMouseMove={handleMouseMove}
+            >
                 <ReactPlayer id="ReactPlayer"
                     ref={playerRef}
                     className={classes.reactPlayer}
@@ -209,7 +233,7 @@ const MainVideo = ({ videoData, getVideoData, isMediumDevice, theaterMode, setTh
                     progressInterval={500}
                 />
                 {/* Top Controls */}
-                <div className={classes.playerControls} >
+                <div className={classes.playerControls} ref={controlsRef}>
                     <Grid container direction="row" alignItems="center" justifyContent="space-between" style={{padding: '16'}}>
                         <Grid item xs={10} >
                             <Typography className={classes.videoTitle} variant="h6" >{videoData.title}</Typography>
