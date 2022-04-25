@@ -2,7 +2,7 @@ import React from 'react';
 import { AppBar, Toolbar, Typography, Grid } from '@material-ui/core';
 import useStyles from './styles';
 
-const Header = () => {
+const Header = ({ isSmallDevice }) => {
     const classes = useStyles();
     return (
         <AppBar position="static" style={{ backgroundColor: "rgba(246,246,249,255)" }} className={classes.appBar}>
@@ -10,9 +10,14 @@ const Header = () => {
                 <div className={classes.textWrapper} >
                     <Typography variant="body1" className={classes.sectionTitle}> Placeholder </Typography>
                     <Typography variant="body1" className={classes.sectionTitle}> Placeholder </Typography>
+
+                    {!isSmallDevice &&
+                    <>
                     <Typography variant="body1" className={classes.sectionTitle}> Placeholder </Typography>
                     <Typography variant="body1" className={classes.sectionTitle}> Placeholder </Typography>
                     <Typography variant="body1" className={classes.sectionTitle}> Placeholder </Typography>
+                    </>
+                    }
                 </div>
             </Toolbar>
         </AppBar>

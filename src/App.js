@@ -2,10 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { CssBaseline, Grid } from '@material-ui/core';
 import { useMediaQuery } from 'react-responsive';
 import { getIGNData } from './api/index';
-
 import { Header, MainVideo, Review, VideoList } from './components';
-
-
 
 const formatTime = (seconds) => {
     if (isNaN(seconds)) {
@@ -38,12 +35,9 @@ const App = () => {
         query: '(max-width: 550px)',
     })
 
-    console.log(video.current);
-    console.log(videoArr);
-
 
     const getVideoData = (startIndex, videoCount) => {
-        getIGNData(`http://localhost:3000/videos?startIndex=${startIndex}&count=${videoCount}`)
+        getIGNData(`http://localhost:3000/videos?startIndex=${startIndex}&count=${videoCount}`) // this port number shoud be in the README file.
             .then(({ data }) => {
                 console.log(data);
                 video.current = {
@@ -65,7 +59,7 @@ const App = () => {
     return (
         <>
             <CssBaseline />
-            <Header />
+            <Header isSmallDevice={isSmallDevice} />
             {isMediumDevice && !theaterMode? (
                 <Grid container spacing={2} style={{ width: '85%', margin: '0vw auto' }}>
                     <Grid item xs={12} md={8} >

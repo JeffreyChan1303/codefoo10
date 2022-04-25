@@ -42,7 +42,6 @@ export default makeStyles((theme) => ({
     },
     bottomControls: {
         padding: '0',
-        // backgroundColor: 'rgba(0,0,0,.20)',
     },
     bottomIcons: {
         color: "white",
@@ -121,16 +120,11 @@ export default makeStyles((theme) => ({
         borderRadius: '2px',
     },
     theaterModeBridge: {
-        // position: 'absolute',
         width: '5px',
         height: '1.75px',
         backgroundColor: 'white',
         margin: 'auto',
         marginTop: '6px',
-        // top: '0',
-        // bottom: '0',
-        // left: '0',
-        // right: '0',
     },
     theaterModeLeftArrow: {
         position: 'absolute',

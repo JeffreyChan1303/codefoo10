@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
-import { Grid, Typography, Button, duration } from '@material-ui/core';
-
-
+import { Grid, Typography, Button } from '@material-ui/core';
 import useStyles from './styles';
-
 
 const VideoList = ({videoArr, isMediumDevice, formatTime, startIndex, setStartIndex, isSmallDevice }) => {
     const classes = useStyles();
@@ -14,9 +11,6 @@ const VideoList = ({videoArr, isMediumDevice, formatTime, startIndex, setStartIn
         setLoadMore(!loadMore);
     }
 
-    // console.log(videoArr)
-    // console.log(isMediumDevice)
-
     for (let i = 0; i < videoArr.length; i++) {
         let temp = videoArr[i]
 
@@ -26,8 +20,6 @@ const VideoList = ({videoArr, isMediumDevice, formatTime, startIndex, setStartIn
             duration: temp.metadata.duration, // inputs the duration of the video
         });
     }
-    // console.log(videos)
-    // console.log(thumbnailArr[0])
 
     return (
         <>

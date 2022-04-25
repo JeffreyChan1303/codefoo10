@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import ReactPlayer from 'react-player';
 import { Button, Slider, Grid, Typography, IconButton, Select, Tooltip, Popover } from '@material-ui/core';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
@@ -10,10 +10,8 @@ import AllInclusiveRoundedIcon from '@material-ui/icons/AllInclusiveRounded';
 import ClosedCaptionIcon from '@material-ui/icons/ClosedCaption';
 import ArrowLeftRoundedIcon from '@material-ui/icons/ArrowLeftRounded';
 import ArrowRightRoundedIcon from '@material-ui/icons/ArrowRightRounded';
-
 import FourKRoundedIcon from '@material-ui/icons/FourKRounded';
 import screenfull from 'screenfull';
-
 import useStyles from './styles';
 
 let count = 0;
@@ -23,11 +21,14 @@ const MainVideo = ({ videoData, getVideoData, isMediumDevice, theaterMode, setTh
     const videoArr = [];
     const qualityArr = [];
 
-    // console.log(videoData);
-
     const playerContainerRef = useRef(null)
     const playerRef = useRef(null);
     const controlsRef = useRef(null);
+
+    const currentTime = playerRef.current ? playerRef.current.getCurrentTime() : '00:00';
+    const duration = playerRef.current ? playerRef.current.getDuration() : '00:00';
+    const elapsedTime = formatTime(currentTime);
+    const totalDuration = formatTime(duration);
 
     const [videoState, setVideoState] = useState({
         playing: false,
@@ -47,25 +48,14 @@ const MainVideo = ({ videoData, getVideoData, isMediumDevice, theaterMode, setTh
     const {playing, muted, volume, played, video, looping, isFullScreen} = videoState;
 
 
-    // currently videoData is the array of urls for the sources
-    // if (videoData.URLs) { // add all video content into arrays
-        for (let i = 0; i < videoData.URLs.length; i++) {
-            videoArr.push(videoData.URLs[i].url);
-            qualityArr.push(videoData.URLs[i].height);
-        }
-    // }
-
-    
-    
-    // console.log(videoState.video)
-    // console.log(videoData);
-    // console.log(videoArr)
-
+    // push video data into 2 arrays
+    for (let i = 0; i < videoData.URLs.length; i++) {
+        videoArr.push(videoData.URLs[i].url);
+        qualityArr.push(videoData.URLs[i].height);
+    }
     
 
     const qualityChange = (quality, index) => {
-        console.log(index);
-        console.log(quality);
         setVideoState({ ...videoState,
             video: { 
                 quality: quality,
@@ -83,7 +73,6 @@ const MainVideo = ({ videoData, getVideoData, isMediumDevice, theaterMode, setTh
             setVideoState({ ...videoState, changingQuality: false })
         }
     }
-
 
     const handlePlayPause = () => {
         setVideoState({ ...videoState, playing: !videoState.playing })
@@ -116,16 +105,12 @@ const MainVideo = ({ videoData, getVideoData, isMediumDevice, theaterMode, setTh
 
     const [seeking, setSeeking] = useState(false); // I put this separately because it didn't work for some reason w hen it was a property of the videoState object.
     const handleProgress = (changeState) => {
-        // console.log(changeState);
-        console.log(count);
-        console.log(controlsRef.current.style.visibility)
         if (count > 3) {
             controlsRef.current.style.visibility = "hidden";
             count = 0;
         }
 
         if (controlsRef.current.style.visibility == "visible") {
-            console.log('booty')
             count += 1;
         }
 
@@ -153,12 +138,7 @@ const MainVideo = ({ videoData, getVideoData, isMediumDevice, theaterMode, setTh
         }
     }
 
-    const currentTime = playerRef.current ? playerRef.current.getCurrentTime() : '00:00';
-    const duration = playerRef.current ? playerRef.current.getDuration() : '00:00';
-    const elapsedTime = formatTime(currentTime);
-    const totalDuration = formatTime(duration);
-
-    function ValueLabelComponent(props) { // make this lok better... keep it open when dragging
+    function ValueLabelComponent(props) {
         const { children, open, value } = props;
       
         return (
@@ -183,7 +163,13 @@ const MainVideo = ({ videoData, getVideoData, isMediumDevice, theaterMode, setTh
     function enableScroll() {
         window.onscroll = function() {};
     }
-    // quality change with popup TEST
+
+    const handleMouseMove = () => {
+        controlsRef.current.style.visibility = "visible";
+        count = 0;
+    }
+
+    // quality popup functions
     const [anchorEl, setAnchorEl] = React.useState(null);
 
     const handlePopoverClick = (event) => {
@@ -195,12 +181,6 @@ const MainVideo = ({ videoData, getVideoData, isMediumDevice, theaterMode, setTh
         setAnchorEl(null);
         enableScroll();
     };
-
-    const handleMouseMove = () => {
-        console.log('yes')
-        controlsRef.current.style.visibility = "visible";
-        count = 0;
-    }
 
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
@@ -215,10 +195,7 @@ const MainVideo = ({ videoData, getVideoData, isMediumDevice, theaterMode, setTh
                 <ReactPlayer id="ReactPlayer"
                     ref={playerRef}
                     className={classes.reactPlayer}
-                    // url={videoState.url? videoState.video.url : videoArr[videoArr.length - 1]}
                     url={video.url? videoArr[videoState.video.qualityIndex] : videoArr[videoArr.length - 1]}                   
-                    
-
                     width="100%" 
                     height="100%"
                     muted={muted}
@@ -232,11 +209,18 @@ const MainVideo = ({ videoData, getVideoData, isMediumDevice, theaterMode, setTh
                     onProgress={handleProgress}
                     progressInterval={500}
                 />
+
                 {/* Top Controls */}
+
                 <div className={classes.playerControls} ref={controlsRef}>
                     <Grid container direction="row" alignItems="center" justifyContent="space-between" style={{padding: '16'}}>
                         <Grid item xs={10} >
-                            <Typography className={classes.videoTitle} variant="h6" >{videoData.title}</Typography>
+                            <Typography 
+                                className={classes.videoTitle} 
+                                variant={isSmallDevice? "body2" : "h6" } 
+                            >
+                                {videoData.title}
+                            </Typography>
                         </Grid>
 
                         <Grid >
@@ -303,7 +287,6 @@ const MainVideo = ({ videoData, getVideoData, isMediumDevice, theaterMode, setTh
                                         className={classes.progressBar}
                                         onChange={handleVolumeChange}
                                         onChangeCommitted={handleVolumeSeekUp}
-                                        // style={isSmallDevice? { width: "40px" } : { width: "70px"}}
                                     />
                                 </div>
 
