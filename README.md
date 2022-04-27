@@ -29,10 +29,15 @@ To run this project Node.js is require.
 Run the proxy server on localhost using node.js
 
 Then use npm start to run the website, change line 46 based on where the proxy server was hosted.
+
+Choose localhost port number on line 22 ./proxyserver app.js (default: port 3000).
+Change portNumber to the proxy server port number on line 7 ./App.js (default: port 3000).
+
+run node app.js on ./proxyserver
+run npm start on 
+
 ```
-
 $ ./proxyserver node app.js
-
 $ npm start
 ```
 

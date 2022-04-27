@@ -4,6 +4,8 @@ import { useMediaQuery } from 'react-responsive';
 import { getIGNData } from './api/index';
 import { Header, MainVideo, Review, VideoList } from './components';
 
+const portNumber = 3000;
+
 const formatTime = (seconds) => {
     if (isNaN(seconds)) {
         return '00:00';
@@ -37,7 +39,7 @@ const App = () => {
 
 
     const getVideoData = (startIndex, videoCount) => {
-        getIGNData(`http://localhost:3000/videos?startIndex=${startIndex}&count=${videoCount}`) // this port number shoud be in the README file.
+        getIGNData(`http://localhost:${portNumber}/videos?startIndex=${startIndex}&count=${videoCount}`)
             .then(({ data }) => {
                 console.log(data);
                 video.current = {
