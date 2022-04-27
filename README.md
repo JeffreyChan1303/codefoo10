@@ -45,17 +45,17 @@ $ npm start
 1. Download [Node.js](nodejs.org/en/) version 16.13.1 or newer. This should come with npm.
 2. Clone this repository by going into the target directory on your device and input 'git clone https://github.com/JeffreyChan1303/codefoo10.git' into the terminal.
 ```
-$ git clone https://github.com/JeffreyChan1303/codefoo10.git
+npm i https://github.com/JeffreyChan1303/codefoo10.git
 ```
-3. go into /proxyserver directory and input 'node app.js' into the terminal. This initializes the prozy server.
+3. go into /server directory and input 'node app.js' into the terminal. This initializes the prozy server.
 ```
-$ cd proxyserver
-$ node app.js
+cd proxyserver
+node app.js
 ```
 4. return to codefoo10 file and input 'npm start'. This initializes the client/website.
 ```
-$ cd ..
-$ npm start
+cd ..
+npm start
 ```
 
 
