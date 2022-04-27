@@ -3,7 +3,7 @@
 ### A simple react website with video player and api for IGN CodeFoo10 intern Application.
 
 ## Table of Contents
-* [Notes](#general-info)
+* [Notes](#Notes)
 * [Technologies](#technologies)
 * [Setup](#setup)
 ## Notes
@@ -12,6 +12,7 @@ A proxy server is needed to bypass the CORS error when accessing the IGN api thr
 
 ## Technologies
 Front-end is created with: 
+* create-react-app
 * React version: 18.0.0
 * React Player version: 2.10.0
 * Material UI version: 4.12.4
@@ -25,37 +26,35 @@ Proxy server is created with:
 * cors version: 2.8.5
 
 ## Setup
-To run this project Node.js is required. 
-Run the proxy server on localhost using node.js
 
-Then use npm start to run the website, change line 46 based on where the proxy server was hosted.
+##### 1. Check if you have node, npm, and git installed.
+This can be done by using 'node -v', 'npm -v', and 'git --version' respectively.
+you can install node [here](https://nodejs.org), this installs both nodejs and npm
+you can learn more about installing git [here](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 
-Choose localhost port number on line 22 ./proxyserver app.js (default: port 3000).
-Change portNumber to the proxy server port number on line 7 ./App.js (default: port 3000).
-
-run node app.js on ./proxyserver
-run npm start on 
-
+##### 2. Clone repository
+Go into the target directory and clone the repository using the code below
 ```
-$ ./proxyserver node app.js
-$ npm start
+git clone https://github.com/JeffreyChan1303/codefoo10.git
 ```
-
-
-1. Download [Node.js](nodejs.org/en/) version 16.13.1 or newer. This should come with npm.
-2. Clone this repository by going into the target directory on your device and input 'git clone https://github.com/JeffreyChan1303/codefoo10.git' into the terminal.
+##### 3. Initialize node modules
+go into the cloned repository and use npm to initialize the modules
 ```
-npm i https://github.com/JeffreyChan1303/codefoo10.git
+cd codefoo10
+npm install
 ```
-3. go into /server directory and input 'node app.js' into the terminal. This initializes the prozy server.
+##### 4. run the proxy server
+go into the server file and run the proxy server to bypass CORS error
 ```
-cd proxyserver
+cd server
 node app.js
 ```
-4. return to codefoo10 file and input 'npm start'. This initializes the client/website.
+*Default port: 3000, this can be changed on line 22 of /server/app.js.*
+##### 5. run the webpage
+go back into the codefoo10 file and start the website
 ```
 cd ..
 npm start
 ```
-
+*If default port for the server was changed from 3000, adjust the server call on line 7 of ./App.js to the new port number.*
 

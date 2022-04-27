@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import ReactPlayer from 'react-player';
-import { Button, Slider, Grid, Typography, IconButton, Select, Tooltip, Popover } from '@material-ui/core';
+import { Button, Slider, Grid, Typography, IconButton, Tooltip, Popover } from '@material-ui/core';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import PauseIcon from '@material-ui/icons/Pause';
 import ReplyRoundedIcon from '@material-ui/icons/ReplyRounded';
@@ -16,7 +16,7 @@ import useStyles from './styles';
 
 let count = 0;
 
-const MainVideo = ({ videoData, getVideoData, isMediumDevice, theaterMode, setTheaterMode, formatTime, startIndex, setStartIndex, isSmallDevice }) => {
+const MainVideo = ({ videoData, isMediumDevice, theaterMode, setTheaterMode, formatTime, startIndex, setStartIndex, isSmallDevice, isLargeDevice }) => {
     const classes = useStyles();
     const videoArr = [];
     const qualityArr = [];
@@ -102,15 +102,15 @@ const MainVideo = ({ videoData, getVideoData, isMediumDevice, theaterMode, setTh
         screenfull.toggle(playerContainerRef.current);
     };
 
-
-    const [seeking, setSeeking] = useState(false); // I put this separately because it didn't work for some reason w hen it was a property of the videoState object.
+    // I put ustState for seeking because it didn't work for some reason when it was a property of the videoState object.
+    const [seeking, setSeeking] = useState(false); 
     const handleProgress = (changeState) => {
         if (count > 3) {
             controlsRef.current.style.visibility = "hidden";
             count = 0;
         }
 
-        if (controlsRef.current.style.visibility == "visible") {
+        if (controlsRef.current.style.visibility === "visible") {
             count += 1;
         }
 
@@ -252,6 +252,8 @@ const MainVideo = ({ videoData, getVideoData, isMediumDevice, theaterMode, setTh
                                 />
                         </Grid>
 
+                        {/* Bottom left controls */}
+
                         <Grid item >
                             <Grid container direction="row" alignItems="center">
                                 <IconButton onClick={handlePlayPause} className={classes.bottomIcons}>
@@ -291,7 +293,9 @@ const MainVideo = ({ videoData, getVideoData, isMediumDevice, theaterMode, setTh
                                 </div>
 
                                 { !isSmallDevice &&
-                                <Typography style={{color: "white", cursor: 'default', marginLeft: '15px' }} >
+                                <Typography style={{color: "white", cursor: 'default', marginLeft: '15px' }} 
+                                    variant={isLargeDevice? "body1" : "body2"} 
+                                >
                                     {elapsedTime}/{totalDuration}
                                 </Typography>
                                 }

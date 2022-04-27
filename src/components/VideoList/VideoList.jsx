@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Grid, Typography, Button } from '@material-ui/core';
 import useStyles from './styles';
 
-const VideoList = ({videoArr, isMediumDevice, formatTime, startIndex, setStartIndex, isSmallDevice }) => {
+const VideoList = ({videoArr, isMediumDevice, formatTime, startIndex, setStartIndex, isSmallDevice, isLargeDevice }) => {
     const classes = useStyles();
     const [loadMore, setLoadMore] = useState(false)
     const videos = []; 
@@ -27,7 +27,7 @@ const VideoList = ({videoArr, isMediumDevice, formatTime, startIndex, setStartIn
         <>
             {videos.map((element, index) => index < (loadMore? videos.length : 4) && (
             <>
-                {index != 0 && <hr style={{opacity: '40%'}} />}
+                {index !== 0 && <hr style={{opacity: '40%'}} />}
                 <Grid item className={classes.playlistItem} xs={4} md={12}>
                     <Button className={classes.playlistImgWrapper} onClick={() => setStartIndex(startIndex + index)}>
                         <img  
@@ -36,12 +36,16 @@ const VideoList = ({videoArr, isMediumDevice, formatTime, startIndex, setStartIn
                             alt=''
                         />
                         <div className={classes.videoDurationWrapper}>
-                            <Typography className={classes.videoDurationText}>{formatTime(element.duration)}</Typography>
+                            <Typography className={classes.videoDurationText} variant={isLargeDevice? "body1" : "body2"}>
+                                {formatTime(element.duration)}
+                            </Typography>
                         </div>
                     </Button>
                     <Button className={classes.textContainer} onClick={() => setStartIndex(startIndex + index)}>
                         <div className={classes.textWrapper} >
-                            <Typography className={classes.text} variant="body2">{element.title}</Typography>
+                            <Typography className={classes.text} variant={isLargeDevice? "body1" : "body2"}>
+                                {element.title}
+                            </Typography>
                         </div>
                     </Button>
                 </Grid>
@@ -61,7 +65,7 @@ const VideoList = ({videoArr, isMediumDevice, formatTime, startIndex, setStartIn
         <>
             {videos.map((element, index) => (
             <>
-                {index != 0 && <hr style={{opacity: '40%'}} />}
+                {index !== 0 && <hr style={{opacity: '40%'}} />}
                 <Grid item className={classes.playlistItem} xs={12} md={12} style={{minWidth: '30vw'}}>
                     <Button className={classes.playlistImgWrapper} style={isSmallDevice? { width: '100%', paddingTop: "56.25%" } : {}} onClick={() => setStartIndex(startIndex + index)}>
                             <img  
@@ -70,14 +74,18 @@ const VideoList = ({videoArr, isMediumDevice, formatTime, startIndex, setStartIn
                                 alt=''
                             />
                             <div className={classes.videoDurationWrapper}>
-                                <Typography className={classes.videoDurationText}>{formatTime(element.duration)}</Typography>
+                                <Typography className={classes.videoDurationText} variant={isLargeDevice? "body1" : "body2"}>
+                                    {formatTime(element.duration)}
+                                </Typography>
                             </div>
                     </Button>
 
                     {!isSmallDevice && 
                     <Button className={classes.textContainer} onClick={() => setStartIndex(startIndex + index)}>
                         <div className={classes.textWrapper} >
-                            <Typography className={classes.text} variant="body2">{element.title}</Typography>
+                            <Typography className={classes.text} variant={isLargeDevice? "body1" : "body2"}>
+                                {element.title}
+                            </Typography>
                         </div>
                     </Button>
                     }

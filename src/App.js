@@ -36,6 +36,9 @@ const App = () => {
     const isSmallDevice = useMediaQuery({
         query: '(max-width: 550px)',
     })
+    const isLargeDevice = useMediaQuery({
+        query: '(min-width: 1250px)',
+    })
 
 
     const getVideoData = (startIndex, videoCount) => {
@@ -74,6 +77,7 @@ const App = () => {
                             formatTime={formatTime}
                             startIndex={startIndex}
                             setStartIndex={setStartIndex}
+                            isLargeDevice={isLargeDevice}
                             />
                         <Review videoData={video.current} />
                     </Grid>
@@ -84,6 +88,7 @@ const App = () => {
                             formatTime={formatTime}
                             startIndex={startIndex}
                             setStartIndex={setStartIndex}
+                            isLargeDevice={isLargeDevice}
                         />
                     </Grid>
                 </Grid>
@@ -100,6 +105,7 @@ const App = () => {
                             startIndex={startIndex}
                             setStartIndex={setStartIndex}
                             isSmallDevice={isSmallDevice}
+                            isLargeDevice={isLargeDevice}
                         />
                     </Grid>
                     <Grid container direction='row' spacing={1} style={{ flexWrap: 'nowrap', overflowX: 'scroll'}}>
@@ -110,6 +116,7 @@ const App = () => {
                             startIndex={startIndex}
                             setStartIndex={setStartIndex}
                             isSmallDevice={isSmallDevice}
+                            isLargeDevice={isLargeDevice}
                         />
                     </Grid>
                     <Grid item xs={12} >
