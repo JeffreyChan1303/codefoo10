@@ -3,12 +3,12 @@
 ### A simple react website with video player and api for IGN CodeFoo10 intern Application.
 
 ## Table of Contents
-[General Info](#general-info)
-[Technologies](#technologies)
-[Setup](#setup)
-## General Info
+* [Notes](#general-info)
+* [Technologies](#technologies)
+* [Setup](#setup)
+## Notes
 
-A proxy server was needed to bypass the CORS error when accessing the IGN api through the website. There are a few aspects that weren't as refined due to final exams such as the unappealing mobile view and view on 4k+ sized monitors. Didn't know the Font family in the image so I used Roboto.
+A proxy server is needed to bypass the CORS error when accessing the IGN api through the website. There are a few aspects that weren't as refined due to final exams such as the unappealing mobile view and view on 4k+ sized monitors. Didn't know the Font family in the image so I used Roboto.
 
 ## Technologies
 Front-end is created with: 
@@ -25,7 +25,7 @@ Proxy server is created with:
 * cors version: 2.8.5
 
 ## Setup
-To run this project Node.js is require. 
+To run this project Node.js is required. 
 Run the proxy server on localhost using node.js
 
 Then use npm start to run the website, change line 46 based on where the proxy server was hosted.
@@ -38,6 +38,23 @@ run npm start on
 
 ```
 $ ./proxyserver node app.js
+$ npm start
+```
+
+
+1. Download [Node.js](nodejs.org/en/) version 16.13.1 or newer. This should come with npm.
+2. Clone this repository by going into the target directory on your device and input 'git clone https://github.com/JeffreyChan1303/codefoo10.git' into the terminal.
+```
+$ git clone https://github.com/JeffreyChan1303/codefoo10.git
+```
+3. go into /proxyserver directory and input 'node app.js' into the terminal. This initializes the prozy server.
+```
+$ cd proxyserver
+$ node app.js
+```
+4. return to codefoo10 file and input 'npm start'. This initializes the client/website.
+```
+$ cd ..
 $ npm start
 ```
 
