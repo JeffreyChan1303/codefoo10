@@ -44,15 +44,15 @@ cd codefoo10
 npm install
 ```
 ### 4. run the proxy server
-##### go into the server file and run the proxy server to bypass CORS error
-*Default port: 3000, this can be changed on line 22 of /server/app.js.*
+go into the server file and run the proxy server to bypass CORS error
+##### *Default port: 3000, this can be changed on line 22 of /server/app.js.*
 ```
 cd server
 node app.js
 ```
 ### 5. run the webpage
-##### go back into the codefoo10 file and start the website
-*If default port for the server was changed from 3000, adjust the server call on line 7 of ./App.js to the new port number.*
+go back into the codefoo10 file and start the website
+##### *If default port for the server was changed from 3000, adjust the server call on line 7 of ./App.js to the new port number.*
 ```
 cd ..
 npm start
