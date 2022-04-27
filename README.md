@@ -27,30 +27,30 @@ Proxy server is created with:
 
 ## Setup
 
-##### 1. Check if you have node, npm, and git installed.
+### 1. Check if you have node, npm, and git installed.
 This can be done by using 'node -v', 'npm -v', and 'git --version' respectively.
 you can install node [here](https://nodejs.org), this installs both nodejs and npm
 you can learn more about installing git [here](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 
-##### 2. Clone repository
+### 2. Clone repository
 Go into the target directory and clone the repository using the code below
 ```
 git clone https://github.com/JeffreyChan1303/codefoo10.git
 ```
-##### 3. Initialize node modules
+### 3. Initialize node modules
 go into the cloned repository and use npm to initialize the modules
 ```
 cd codefoo10
 npm install
 ```
-##### 4. run the proxy server
+### 4. run the proxy server
 go into the server file and run the proxy server to bypass CORS error
 ```
 cd server
 node app.js
 ```
 *Default port: 3000, this can be changed on line 22 of /server/app.js.*
-##### 5. run the webpage
+### 5. run the webpage
 go back into the codefoo10 file and start the website
 ```
 cd ..
