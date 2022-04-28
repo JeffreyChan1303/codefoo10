@@ -1,6 +1,6 @@
 # IGN Code Foo 10 - Front-end project application
 
-### A simple react website with video player and api for IGN CodeFoo10 intern Application.
+### A simple react website with video player and api for IGN CodeFoo10 engineering  intern Application.
 
 ## Table of Contents
 * [Notes](#Notes)
@@ -29,8 +29,8 @@ Proxy server is created with:
 
 ### 1. Check if you have node, npm, and git installed.
 This can be done by using 'node -v', 'npm -v', and 'git --version' respectively.
-you can install node [here](https://nodejs.org), this installs both nodejs and npm
-you can learn more about installing git [here](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+##### you can install node [here](https://nodejs.org). This installs both nodejs and npm.
+##### you can learn more about installing git [here](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 
 ### 2. Clone repository
 Go into the target directory and clone the repository using the code below
@@ -45,16 +45,16 @@ npm install
 ```
 ### 4. run the proxy server
 go into the server file and run the proxy server to bypass CORS error
-##### *Default port: 3000, this can be changed on line 22 of /server/app.js.*
+##### *Default port: 3000, this can be changed on line 22 on /codefoo10/server/app.js.*
 ```
 cd server
 node app.js
 ```
 ### 5. run the webpage
-go back into the codefoo10 file and start the website
-##### *If default port for the server was changed from 3000, adjust the server call on line 7 of ./App.js to the new port number.*
+create a new terminal, go into the codefoo10 directory and start the website
+##### *If default port for the server was changed from 3000, adjust the server call on line 7 of /codefoo10/App.js to the new port number.*
 ```
-cd ..
+cd codefoo10
 npm start
 ```
 
