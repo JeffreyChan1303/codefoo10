@@ -2,6 +2,8 @@
 
 ### A simple react website with video player and api for IGN CodeFoo10 engineering  intern Application.
 
+#### Deployed website [link](https://jeffreychancodefoo2022.netlify.app/)
+
 ## Table of Contents
 * [Notes](#Notes)
 * [Technologies](#technologies)
@@ -43,14 +45,7 @@ go into the cloned repository and use npm to initialize the modules
 cd codefoo10
 npm install
 ```
-### 4. run the proxy server
-go into the server file and run the proxy server to bypass CORS error
-##### *Default port: 3000, this can be changed on line 22 on /codefoo10/server/app.js.*
-```
-cd server
-node app.js
-```
-### 5. run the webpage
+### 4. run the webpage
 create a new terminal, go into the codefoo10 directory and start the website
 ##### *If default port for the server was changed from 3000, adjust the server call on line 7 of /codefoo10/App.js to the new port number.*
 ```
