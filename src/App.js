@@ -42,7 +42,7 @@ const App = () => {
 
 
     const getVideoData = (startIndex, videoCount) => {
-        getIGNData(`http://localhost:${portNumber}/videos?startIndex=${startIndex}&count=${videoCount}`)
+        getIGNData(`/videos?startIndex=${startIndex}&count=${videoCount}`)
             .then(({ data }) => {
                 console.log(data);
                 video.current = {
