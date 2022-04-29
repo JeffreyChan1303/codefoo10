@@ -2,7 +2,7 @@
 
 ### A simple react website with video player and api for IGN CodeFoo10 engineering  intern Application.
 
-#### Deployed website [link](https://jeffreychancodefoo2022.netlify.app/)
+#### Deployed Website: [link](https://jeffreychancodefoo2022.netlify.app/)
 
 ## Table of Contents
 * [Notes](#Notes)
@@ -21,16 +21,10 @@ Front-end is created with:
 * Screenfull version: 6.0.1
 * Axios version: 0.26.1
 
-Proxy server is created with:
-* node version: 16.13.1
-* express version: 4.17.3
-* axios version: 0.26.1
-* cors version: 2.8.5
-
 ## Setup
 
 ### 1. Check if you have node, npm, and git installed.
-This can be done by using 'node -v', 'npm -v', and 'git --version' in the terminal.
+This can be done by using 'npm -v', and 'git --version' in the terminal.
 ##### you can install node [here](https://nodejs.org). This installs both nodejs and npm.
 ##### you can learn more about installing git [here](https://git-scm.com)
 
