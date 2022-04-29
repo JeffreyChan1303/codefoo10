@@ -1,5 +1,5 @@
 import React from 'react';
-import { AppBar, Toolbar, Typography, Grid } from '@material-ui/core';
+import { AppBar, Toolbar, Typography } from '@material-ui/core';
 import useStyles from './styles';
 
 const Header = ({ isSmallDevice }) => {

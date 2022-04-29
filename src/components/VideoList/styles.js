@@ -62,13 +62,12 @@ export default makeStyles((theme) => ({
         overflowY: 'hidden',
     },
     loadMoreButton: {
-        color: theme.color,
         width: '90%',
         margin: '5% 5%',
         backgroundColor: 'rgba(191,19,19,255)',
         color: 'white',
         '&:hover': {
-            backgroundColor: 'rgba(160, 50, 50, 255)',
+            backgroundColor: 'rgba(180, 40, 40, 255)',
         }
     },
     loadMoreButtonText: {

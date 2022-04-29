@@ -28,9 +28,9 @@ Proxy server is created with:
 ## Setup
 
 ### 1. Check if you have node, npm, and git installed.
-This can be done by using 'node -v', 'npm -v', and 'git --version' respectively.
+This can be done by using 'node -v', 'npm -v', and 'git --version' in the terminal.
 ##### you can install node [here](https://nodejs.org). This installs both nodejs and npm.
-##### you can learn more about installing git [here](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+##### you can learn more about installing git [here](https://git-scm.com)
 
 ### 2. Clone repository
 Go into the target directory and clone the repository using the code below
