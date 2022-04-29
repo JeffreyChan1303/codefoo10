@@ -24,7 +24,7 @@ Created with:
 
 ## Setup
 
-### 1. Check if you have node, npm, and git installed.
+### 1. Check if you have npm, and git installed.
 This can be done by using 'npm -v', and 'git --version' in the terminal.
 ##### you can install node [here](https://nodejs.org). This installs both nodejs and npm.
 ##### you can learn more about installing git [here](https://git-scm.com)
