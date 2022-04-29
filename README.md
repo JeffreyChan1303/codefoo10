@@ -1,8 +1,9 @@
 # IGN Code Foo 10 - Front-end project application
 
 ### A simple react website with video player and api for IGN CodeFoo10 engineering  intern Application.
-
-#### Deployed Website: [link](https://jeffreychancodefoo2022.netlify.app/)
+* [Introduction](https://github.com/JeffreyChan1303/codefoo10/tree/master/CodeFooQuestions/Introduction.pdf)
+* [Hisui's Power Plant](https://github.com/JeffreyChan1303/codefoo10/tree/master/CodeFooQuestions/HisuisPowerPlant.pdf)
+* [Deployed Website link](https://jeffreychancodefoo2022.netlify.app/)
 
 ## Table of Contents
 * [Notes](#Notes)
@@ -13,7 +14,7 @@
 A proxy server is needed to bypass the CORS error when accessing the IGN api through the website. There are a few aspects that weren't as refined due to final exams such as the unappealing mobile view and view on 4k+ sized monitors. Didn't know the Font family in the image so I used Roboto.
 
 ## Technologies
-Front-end is created with: 
+Created with: 
 * create-react-app
 * React version: 18.0.0
 * React Player version: 2.10.0
