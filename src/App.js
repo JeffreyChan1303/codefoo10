@@ -4,8 +4,6 @@ import { useMediaQuery } from 'react-responsive';
 import { getIGNData } from './api/index';
 import { Header, MainVideo, Review, VideoList } from './components';
 
-const portNumber = 3000;
-
 const formatTime = (seconds) => {
     if (isNaN(seconds)) {
         return '00:00';
