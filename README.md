@@ -11,7 +11,7 @@
 * [Setup](#setup)
 ## Notes
 
-A proxy server is needed to bypass the CORS error when accessing the IGN api through the website. There are a few aspects that weren't as refined due to final exams such as the unappealing mobile view and view on 4k+ sized monitors. Didn't know the Font family in the image so I used Roboto.
+A proxy server is needed to bypass the CORS error when accessing the IGN api through the website. There are a few aspects that weren't as refined due to final exams such as the unappealing mobile view and view on 4k+ sized monitors. I also didn't know the Font family in the image so I used Roboto.
 
 ## Technologies
 Created with: 
@@ -42,7 +42,6 @@ npm install
 ```
 ### 4. run the webpage
 create a new terminal, go into the codefoo10 directory and start the website
-##### *If default port for the server was changed from 3000, adjust the server call on line 7 of /codefoo10/App.js to the new port number.*
 ```
 cd codefoo10
 npm start
