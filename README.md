@@ -41,9 +41,8 @@ cd codefoo10
 npm install
 ```
 ### 4. run the webpage
-create a new terminal, go into the codefoo10 directory and start the website
+start the website using npm start in codefoo10 directory
 ```
-cd codefoo10
 npm start
 ```
 
