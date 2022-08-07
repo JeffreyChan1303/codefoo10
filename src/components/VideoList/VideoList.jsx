@@ -29,7 +29,7 @@ const VideoList = ({videoArr, isMediumDevice, formatTime, startIndex, setStartIn
             <>
                 {index !== 0 && <hr style={{opacity: '40%'}} />}
                 <Grid item className={classes.playlistItem} xs={4} md={12}>
-                    <Button className={classes.playlistImgWrapper} onClick={() => setStartIndex(startIndex + index)}>
+                    <Button className={classes.playlistImgWrapper} onClick={() => setStartIndex(Number(startIndex) + index)}>
                         <img  
                             className={classes.playlistImg} 
                             src={element.thumbnail} 
@@ -41,7 +41,7 @@ const VideoList = ({videoArr, isMediumDevice, formatTime, startIndex, setStartIn
                             </Typography>
                         </div>
                     </Button>
-                    <Button className={classes.textContainer} onClick={() => setStartIndex(startIndex + index)}>
+                    <Button className={classes.textContainer} onClick={() => setStartIndex(Number(startIndex) + index)}>
                         <div className={classes.textWrapper} >
                             <Typography className={classes.text} variant={isLargeDevice? "body1" : "body2"}>
                                 {element.title}
@@ -67,7 +67,7 @@ const VideoList = ({videoArr, isMediumDevice, formatTime, startIndex, setStartIn
             <>
                 {index !== 0 && <hr style={{opacity: '40%'}} />}
                 <Grid item className={classes.playlistItem} xs={12} md={12} style={{minWidth: '30vw'}}>
-                    <Button className={classes.playlistImgWrapper} style={isSmallDevice? { width: '100%', paddingTop: "56.25%" } : {}} onClick={() => setStartIndex(startIndex + index)}>
+                    <Button className={classes.playlistImgWrapper} style={isSmallDevice? { width: '100%', paddingTop: "56.25%" } : {}} onClick={() => setStartIndex(Number(startIndex) + index)}>
                             <img  
                                 className={classes.playlistImg} 
                                 src={element.thumbnail} 
@@ -81,7 +81,7 @@ const VideoList = ({videoArr, isMediumDevice, formatTime, startIndex, setStartIn
                     </Button>
 
                     {!isSmallDevice && 
-                    <Button className={classes.textContainer} onClick={() => setStartIndex(startIndex + index)}>
+                    <Button className={classes.textContainer} onClick={() => setStartIndex(Number(startIndex) + index)}>
                         <div className={classes.textWrapper} >
                             <Typography className={classes.text} variant={isLargeDevice? "body1" : "body2"}>
                                 {element.title}

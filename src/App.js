@@ -22,6 +22,7 @@ const App = () => {
     const [videoArr, setVideoArr] = useState([]);
     const [theaterMode, setTheaterMode] = useState(false);
     const [startIndex, setStartIndex] = useState(0);
+
     const video = useRef({
         URLs: '',
         title: '',
@@ -40,6 +41,7 @@ const App = () => {
 
 
     const getVideoData = (startIndex, videoCount) => {
+        console.log(`/videos?startIndex=${startIndex}&count=${videoCount}`)
         getIGNData(`/videos?startIndex=${startIndex}&count=${videoCount}`)
             .then(({ data }) => {
                 console.log(data);
@@ -56,6 +58,7 @@ const App = () => {
     }
 
     useEffect(() => {
+        console.log(startIndex)
         getVideoData(startIndex, 10)
     }, [startIndex]);
 
