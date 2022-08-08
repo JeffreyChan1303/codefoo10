@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { CssBaseline, Grid } from '@material-ui/core';
 import { useMediaQuery } from 'react-responsive';
 import { getIGNData } from './api/index';
@@ -22,7 +22,10 @@ const App = () => {
     const [videoArr, setVideoArr] = useState([]);
     const [theaterMode, setTheaterMode] = useState(false);
     const [startIndex, setStartIndex] = useState(0);
-    const video = useRef({
+    const [playlistIndex, setPlaylistIndex] = useState(0);
+    const [loading, setLoading] = useState(false);
+
+    const [video, setVideo] = useState({
         URLs: '',
         title: '',
         description: '',
@@ -39,53 +42,67 @@ const App = () => {
     })
 
 
-    const getVideoData = (startIndex, videoCount) => {
-        getIGNData(`/videos?startIndex=${startIndex}&count=${videoCount}`)
-            .then(({ data }) => {
-                console.log(data);
-                video.current = {
-                    URLs: data[0].assets,
-                    title: data[0].metadata.title,
-                    description: data[0].metadata.description,
-                };
-                setVideoArr(data);
-            })
-            .catch(e => {
-                console.log(e);
-            })
+    const getVideoData = async (startIndex) => {
+        setLoading(true);
+
+        try {
+            const { data } = await getIGNData(startIndex);
+            setVideoArr(data);
+            setVideo({
+                URLs: data[0].assets,
+                title: data[0].metadata.title,
+                description: data[0].metadata.description,
+            });
+        } catch (error) {
+            console.log(error);
+        }
+
+        setLoading(false);
     }
 
     useEffect(() => {
-        getVideoData(startIndex, 10)
+        getVideoData(startIndex)
+        setPlaylistIndex(0)
     }, [startIndex]);
 
-    return (
+    useEffect(() => {
+        console.log('test', videoArr, playlistIndex)
+
+        if (videoArr.length !== 0) {
+            setVideo({
+                URLs: videoArr[playlistIndex].assets,
+                title: videoArr[playlistIndex].metadata.title,
+                description: videoArr[playlistIndex].metadata.description,
+            })
+        }
+    }, [playlistIndex, videoArr])
+
+    return (!loading &&
         <>
             <CssBaseline />
-            <Header isSmallDevice={isSmallDevice} />
+            <Header isSmallDevice={isSmallDevice} setStartIndex={setStartIndex} />
             {isMediumDevice && !theaterMode? (
                 <Grid container spacing={2} style={{ width: '85%', margin: '0vw auto' }}>
                     <Grid item xs={12} md={8} >
                         <MainVideo 
-                            getVideoData={getVideoData} 
-                            videoData={video.current}
+                            videoData={video}
                             isMediumDevice={true}
                             theaterMode={theaterMode}
                             setTheaterMode={setTheaterMode}
                             formatTime={formatTime}
-                            startIndex={startIndex}
-                            setStartIndex={setStartIndex}
+                            playlistIndex={playlistIndex}
+                            setPlaylistIndex={setPlaylistIndex}
                             isLargeDevice={isLargeDevice}
                             />
-                        <Review videoData={video.current} />
+                        <Review videoData={video} />
                     </Grid>
                     <Grid item xs={12} md={4}>
                         <VideoList 
                             videoArr={videoArr} 
                             isMediumDevice={true}
                             formatTime={formatTime}
-                            startIndex={startIndex}
-                            setStartIndex={setStartIndex}
+                            playlistIndex={playlistIndex}
+                            setPlaylistIndex={setPlaylistIndex}
                             isLargeDevice={isLargeDevice}
                         />
                     </Grid>
@@ -94,14 +111,13 @@ const App = () => {
                 <Grid container spacing={0} style={isSmallDevice? { width: '98%', margin: '0 auto' } : { width: '90%', margin: '0vw auto' }}>
                     <Grid item xs={12} style={{ padding: '0 0 2em'}}>
                         <MainVideo 
-                            getVideoData={getVideoData} 
-                            videoData={video.current}
+                            videoData={video}
                             isMediumDevice={isMediumDevice}
                             theaterMode={theaterMode}
                             setTheaterMode={setTheaterMode}
                             formatTime={formatTime}
-                            startIndex={startIndex}
-                            setStartIndex={setStartIndex}
+                            playlistIndex={playlistIndex}
+                            setPlaylistIndex={setPlaylistIndex}
                             isSmallDevice={isSmallDevice}
                             isLargeDevice={isLargeDevice}
                         />
@@ -111,14 +127,14 @@ const App = () => {
                             videoArr={videoArr} 
                             isMediumDevice={false}
                             formatTime={formatTime}
-                            startIndex={startIndex}
-                            setStartIndex={setStartIndex}
+                            playlistIndex={playlistIndex}
+                            setPlaylistIndex={setPlaylistIndex}
                             isSmallDevice={isSmallDevice}
                             isLargeDevice={isLargeDevice}
                         />
                     </Grid>
                     <Grid item xs={12} >
-                        <Review videoData={video.current} />
+                        <Review videoData={video} />
                     </Grid>
                 </Grid>
             )}
