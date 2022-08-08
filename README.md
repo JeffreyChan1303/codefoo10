@@ -1,6 +1,9 @@
 # IGN Code Foo 10 - Front-end project application
 
 ### A simple react website with video player and api for IGN CodeFoo10 engineering  intern Application.
+* [Codefoo Introduction](https://github.com/JeffreyChan1303/codefoo10/tree/master/CodeFooQuestions/Introduction.pdf)
+* [Codefoo Hisui's Power Plant](https://github.com/JeffreyChan1303/codefoo10/tree/master/CodeFooQuestions/HisuisPowerPlant.pdf)
+* [Deployed Website link](https://jeffreychancodefoo2022.netlify.app/)
 
 ## Table of Contents
 * [Notes](#Notes)
@@ -8,10 +11,10 @@
 * [Setup](#setup)
 ## Notes
 
-A proxy server is needed to bypass the CORS error when accessing the IGN api through the website. There are a few aspects that weren't as refined due to final exams such as the unappealing mobile view and view on 4k+ sized monitors. Didn't know the Font family in the image so I used Roboto.
+A proxy server is needed to bypass the CORS error when accessing the IGN api through the website. There are a few aspects that weren't as refined due to final exams such as the unappealing mobile view and view on 4k+ sized monitors. I also didn't know the Font family in the image so I used Roboto.
 
 ## Technologies
-Front-end is created with: 
+Created with: 
 * create-react-app
 * React version: 18.0.0
 * React Player version: 2.10.0
@@ -19,16 +22,10 @@ Front-end is created with:
 * Screenfull version: 6.0.1
 * Axios version: 0.26.1
 
-Proxy server is created with:
-* node version: 16.13.1
-* express version: 4.17.3
-* axios version: 0.26.1
-* cors version: 2.8.5
-
 ## Setup
 
-### 1. Check if you have node, npm, and git installed.
-This can be done by using 'node -v', 'npm -v', and 'git --version' in the terminal.
+### 1. Check if you have npm, and git installed.
+This can be done by using 'npm -v', and 'git --version' in the terminal.
 ##### you can install node [here](https://nodejs.org). This installs both nodejs and npm.
 ##### you can learn more about installing git [here](https://git-scm.com)
 
@@ -43,18 +40,9 @@ go into the cloned repository and use npm to initialize the modules
 cd codefoo10
 npm install
 ```
-### 4. run the proxy server
-go into the server file and run the proxy server to bypass CORS error
-##### *Default port: 3000, this can be changed on line 22 on /codefoo10/server/app.js.*
+### 4. run the webpage
+start the website using npm start in codefoo10 directory
 ```
-cd server
-node app.js
-```
-### 5. run the webpage
-create a new terminal, go into the codefoo10 directory and start the website
-##### *If default port for the server was changed from 3000, adjust the server call on line 7 of /codefoo10/App.js to the new port number.*
-```
-cd codefoo10
 npm start
 ```
 
