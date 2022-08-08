@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { CssBaseline, Grid } from '@material-ui/core';
+import { CssBaseline, Grid, Backdrop, CircularProgress } from '@material-ui/core';
 import { useMediaQuery } from 'react-responsive';
 import { getIGNData } from './api/index';
 import { Header, MainVideo, Review, VideoList } from './components';
@@ -77,7 +77,17 @@ const App = () => {
         }
     }, [playlistIndex, videoArr])
 
-    return (!loading &&
+    if (loading) {
+        return (
+            <Backdrop
+                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                open
+            >
+                <CircularProgress color="inherit" />
+            </Backdrop>
+        )
+    }
+    return (
         <>
             <CssBaseline />
             <Header isSmallDevice={isSmallDevice} setStartIndex={setStartIndex} />
