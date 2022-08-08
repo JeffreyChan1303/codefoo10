@@ -21,7 +21,8 @@ const formatTime = (seconds) => {
 const App = () => {
     const [videoArr, setVideoArr] = useState([]);
     const [theaterMode, setTheaterMode] = useState(false);
-    const [startIndex, setStartIndex] = useState(0);
+    const [startIndex, setStartIndex] = useState(10);
+    const [loading, setLoading] = useState(false);
 
     const video = useRef({
         URLs: '',
@@ -40,29 +41,33 @@ const App = () => {
     })
 
 
-    const getVideoData = (startIndex, videoCount) => {
-        console.log(`/videos?startIndex=${startIndex}&count=${videoCount}`)
-        getIGNData(`/videos?startIndex=${startIndex}&count=${videoCount}`)
-            .then(({ data }) => {
-                console.log(data);
-                video.current = {
-                    URLs: data[0].assets,
-                    title: data[0].metadata.title,
-                    description: data[0].metadata.description,
-                };
-                setVideoArr(data);
-            })
-            .catch(e => {
-                console.log(e);
-            })
+    const getVideoData = async (startIndex) => {
+        console.log(startIndex)
+        setLoading(true);
+        
+
+        try {
+            // check if start index is out of bounds 0 - 300
+            const { data } = await getIGNData(startIndex);
+            video.current = {
+                URLs: data[0].assets,
+                title: data[0].metadata.title,
+                description: data[0].metadata.description,
+            };
+            console.log(video.current)
+            setVideoArr(data);
+        } catch (error) {
+            console.log(error);
+        }
+
+        setLoading(false);
     }
 
     useEffect(() => {
-        console.log(startIndex)
-        getVideoData(startIndex, 10)
+        getVideoData(startIndex)
     }, [startIndex]);
 
-    return (
+    return (!loading &&
         <>
             <CssBaseline />
             <Header isSmallDevice={isSmallDevice} />

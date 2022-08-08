@@ -20,6 +20,7 @@ const VideoList = ({videoArr, isMediumDevice, formatTime, startIndex, setStartIn
             duration: temp.metadata.duration, // inputs the duration of the video
         });
     }
+    console.log(videos)
 
     return (
         <>
