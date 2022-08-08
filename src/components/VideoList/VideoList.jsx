@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Grid, Typography, Button } from '@material-ui/core';
 import useStyles from './styles';
 
-const VideoList = ({videoArr, isMediumDevice, formatTime, startIndex, setStartIndex, isSmallDevice, isLargeDevice }) => {
+const VideoList = ({videoArr, isMediumDevice, formatTime, playlistIndex, setPlaylistIndex, isSmallDevice, isLargeDevice }) => {
     const classes = useStyles();
     const [loadMore, setLoadMore] = useState(false)
     const videos = []; 
@@ -26,11 +26,12 @@ const VideoList = ({videoArr, isMediumDevice, formatTime, startIndex, setStartIn
         <>
         {isMediumDevice? (
         <>
-            {videos.map((element, index) => index < (loadMore? videos.length : 4) && (
+            {videos.map((element, index) => index < (loadMore? videos.length : 4 + playlistIndex) && (
+                index >= playlistIndex &&
             <>
                 {index !== 0 && <hr style={{opacity: '40%'}} />}
                 <Grid item className={classes.playlistItem} xs={4} md={12}>
-                    <Button className={classes.playlistImgWrapper} onClick={() => setStartIndex(Number(startIndex) + index)}>
+                    <Button className={classes.playlistImgWrapper} onClick={() => setPlaylistIndex(index)}>
                         <img  
                             className={classes.playlistImg} 
                             src={element.thumbnail} 
@@ -42,7 +43,7 @@ const VideoList = ({videoArr, isMediumDevice, formatTime, startIndex, setStartIn
                             </Typography>
                         </div>
                     </Button>
-                    <Button className={classes.textContainer} onClick={() => setStartIndex(Number(startIndex) + index)}>
+                    <Button className={classes.textContainer} onClick={() => setPlaylistIndex(index)}>
                         <div className={classes.textWrapper} >
                             <Typography className={classes.text} variant={isLargeDevice? "body1" : "body2"}>
                                 {element.title}
@@ -65,10 +66,11 @@ const VideoList = ({videoArr, isMediumDevice, formatTime, startIndex, setStartIn
         ) : (
         <>
             {videos.map((element, index) => (
+                index >= playlistIndex &&
             <>
                 {index !== 0 && <hr style={{opacity: '40%'}} />}
                 <Grid item className={classes.playlistItem} xs={12} md={12} style={{minWidth: '30vw'}}>
-                    <Button className={classes.playlistImgWrapper} style={isSmallDevice? { width: '100%', paddingTop: "56.25%" } : {}} onClick={() => setStartIndex(Number(startIndex) + index)}>
+                    <Button className={classes.playlistImgWrapper} style={isSmallDevice? { width: '100%', paddingTop: "56.25%" } : {}} onClick={() => setPlaylistIndex(index)}>
                             <img  
                                 className={classes.playlistImg} 
                                 src={element.thumbnail} 
@@ -82,7 +84,7 @@ const VideoList = ({videoArr, isMediumDevice, formatTime, startIndex, setStartIn
                     </Button>
 
                     {!isSmallDevice && 
-                    <Button className={classes.textContainer} onClick={() => setStartIndex(Number(startIndex) + index)}>
+                    <Button className={classes.textContainer} onClick={() => setPlaylistIndex(index)}>
                         <div className={classes.textWrapper} >
                             <Typography className={classes.text} variant={isLargeDevice? "body1" : "body2"}>
                                 {element.title}

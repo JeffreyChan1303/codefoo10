@@ -47,12 +47,12 @@ const App = () => {
 
         try {
             const { data } = await getIGNData(startIndex);
+            setVideoArr(data);
             video.current = {
                 URLs: data[0].assets,
                 title: data[0].metadata.title,
                 description: data[0].metadata.description,
             };
-            setVideoArr(data);
         } catch (error) {
             console.log(error);
         }
@@ -62,7 +62,22 @@ const App = () => {
 
     useEffect(() => {
         getVideoData(startIndex)
+        setPlaylistIndex(0)
     }, [startIndex]);
+
+    useEffect(() => {
+        console.log('test', videoArr, playlistIndex)
+
+        if (videoArr.length !== 0) {
+            console.log(video.current.title, videoArr[playlistIndex].metadata.title)
+
+            video.current = {
+                URLs: videoArr[playlistIndex].assets,
+                title: videoArr[playlistIndex].metadata.title,
+                description: videoArr[playlistIndex].metadata.description,
+            }
+        }
+    }, [playlistIndex, videoArr])
 
     return (!loading &&
         <>
@@ -72,14 +87,13 @@ const App = () => {
                 <Grid container spacing={2} style={{ width: '85%', margin: '0vw auto' }}>
                     <Grid item xs={12} md={8} >
                         <MainVideo 
-                            getVideoData={getVideoData} 
                             videoData={video.current}
                             isMediumDevice={true}
                             theaterMode={theaterMode}
                             setTheaterMode={setTheaterMode}
                             formatTime={formatTime}
-                            startIndex={startIndex}
-                            setStartIndex={setStartIndex}
+                            playlistIndex={playlistIndex}
+                            setPlaylistIndex={setPlaylistIndex}
                             isLargeDevice={isLargeDevice}
                             />
                         <Review videoData={video.current} />
@@ -89,8 +103,8 @@ const App = () => {
                             videoArr={videoArr} 
                             isMediumDevice={true}
                             formatTime={formatTime}
-                            startIndex={startIndex}
-                            setStartIndex={setStartIndex}
+                            playlistIndex={playlistIndex}
+                            setPlaylistIndex={setPlaylistIndex}
                             isLargeDevice={isLargeDevice}
                         />
                     </Grid>
@@ -99,14 +113,13 @@ const App = () => {
                 <Grid container spacing={0} style={isSmallDevice? { width: '98%', margin: '0 auto' } : { width: '90%', margin: '0vw auto' }}>
                     <Grid item xs={12} style={{ padding: '0 0 2em'}}>
                         <MainVideo 
-                            getVideoData={getVideoData} 
                             videoData={video.current}
                             isMediumDevice={isMediumDevice}
                             theaterMode={theaterMode}
                             setTheaterMode={setTheaterMode}
                             formatTime={formatTime}
-                            startIndex={startIndex}
-                            setStartIndex={setStartIndex}
+                            playlistIndex={playlistIndex}
+                            setPlaylistIndex={setPlaylistIndex}
                             isSmallDevice={isSmallDevice}
                             isLargeDevice={isLargeDevice}
                         />
@@ -116,8 +129,8 @@ const App = () => {
                             videoArr={videoArr} 
                             isMediumDevice={false}
                             formatTime={formatTime}
-                            startIndex={startIndex}
-                            setStartIndex={setStartIndex}
+                            playlistIndex={playlistIndex}
+                            setPlaylistIndex={setPlaylistIndex}
                             isSmallDevice={isSmallDevice}
                             isLargeDevice={isLargeDevice}
                         />

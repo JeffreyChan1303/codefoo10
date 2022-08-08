@@ -16,7 +16,7 @@ import useStyles from './styles';
 
 let count = 0;
 
-const MainVideo = ({ videoData, isMediumDevice, theaterMode, setTheaterMode, formatTime, startIndex, setStartIndex, isSmallDevice, isLargeDevice }) => {
+const MainVideo = ({ videoData, isMediumDevice, theaterMode, setTheaterMode, formatTime, playlistIndex, setPlaylistIndex, isSmallDevice, isLargeDevice }) => {
     const classes = useStyles();
     const videoArr = [];
     const qualityArr = [];
@@ -133,8 +133,8 @@ const MainVideo = ({ videoData, isMediumDevice, theaterMode, setTheaterMode, for
     };
 
     const handleEnded = () => {
-        if (!videoState.looping) {
-            setStartIndex(startIndex + 1)
+        if (!videoState.looping && (playlistIndex < 20)) {
+            setPlaylistIndex(playlistIndex + 1)
         }
     }
 
