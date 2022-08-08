@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { CssBaseline, Grid } from '@material-ui/core';
 import { useMediaQuery } from 'react-responsive';
 import { getIGNData } from './api/index';
@@ -25,7 +25,7 @@ const App = () => {
     const [playlistIndex, setPlaylistIndex] = useState(0);
     const [loading, setLoading] = useState(false);
 
-    const video = useRef({
+    const [video, setVideo] = useState({
         URLs: '',
         title: '',
         description: '',
@@ -48,11 +48,11 @@ const App = () => {
         try {
             const { data } = await getIGNData(startIndex);
             setVideoArr(data);
-            video.current = {
+            setVideo({
                 URLs: data[0].assets,
                 title: data[0].metadata.title,
                 description: data[0].metadata.description,
-            };
+            });
         } catch (error) {
             console.log(error);
         }
@@ -69,13 +69,11 @@ const App = () => {
         console.log('test', videoArr, playlistIndex)
 
         if (videoArr.length !== 0) {
-            console.log(video.current.title, videoArr[playlistIndex].metadata.title)
-
-            video.current = {
+            setVideo({
                 URLs: videoArr[playlistIndex].assets,
                 title: videoArr[playlistIndex].metadata.title,
                 description: videoArr[playlistIndex].metadata.description,
-            }
+            })
         }
     }, [playlistIndex, videoArr])
 
@@ -87,7 +85,7 @@ const App = () => {
                 <Grid container spacing={2} style={{ width: '85%', margin: '0vw auto' }}>
                     <Grid item xs={12} md={8} >
                         <MainVideo 
-                            videoData={video.current}
+                            videoData={video}
                             isMediumDevice={true}
                             theaterMode={theaterMode}
                             setTheaterMode={setTheaterMode}
@@ -96,7 +94,7 @@ const App = () => {
                             setPlaylistIndex={setPlaylistIndex}
                             isLargeDevice={isLargeDevice}
                             />
-                        <Review videoData={video.current} />
+                        <Review videoData={video} />
                     </Grid>
                     <Grid item xs={12} md={4}>
                         <VideoList 
@@ -113,7 +111,7 @@ const App = () => {
                 <Grid container spacing={0} style={isSmallDevice? { width: '98%', margin: '0 auto' } : { width: '90%', margin: '0vw auto' }}>
                     <Grid item xs={12} style={{ padding: '0 0 2em'}}>
                         <MainVideo 
-                            videoData={video.current}
+                            videoData={video}
                             isMediumDevice={isMediumDevice}
                             theaterMode={theaterMode}
                             setTheaterMode={setTheaterMode}
@@ -136,7 +134,7 @@ const App = () => {
                         />
                     </Grid>
                     <Grid item xs={12} >
-                        <Review videoData={video.current} />
+                        <Review videoData={video} />
                     </Grid>
                 </Grid>
             )}
