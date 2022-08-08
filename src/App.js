@@ -21,7 +21,8 @@ const formatTime = (seconds) => {
 const App = () => {
     const [videoArr, setVideoArr] = useState([]);
     const [theaterMode, setTheaterMode] = useState(false);
-    const [startIndex, setStartIndex] = useState(10);
+    const [startIndex, setStartIndex] = useState(0);
+    const [playlistIndex, setPlaylistIndex] = useState(0);
     const [loading, setLoading] = useState(false);
 
     const video = useRef({
@@ -42,19 +43,15 @@ const App = () => {
 
 
     const getVideoData = async (startIndex) => {
-        console.log(startIndex)
         setLoading(true);
-        
 
         try {
-            // check if start index is out of bounds 0 - 300
             const { data } = await getIGNData(startIndex);
             video.current = {
                 URLs: data[0].assets,
                 title: data[0].metadata.title,
                 description: data[0].metadata.description,
             };
-            console.log(video.current)
             setVideoArr(data);
         } catch (error) {
             console.log(error);
@@ -70,7 +67,7 @@ const App = () => {
     return (!loading &&
         <>
             <CssBaseline />
-            <Header isSmallDevice={isSmallDevice} />
+            <Header isSmallDevice={isSmallDevice} setStartIndex={setStartIndex} />
             {isMediumDevice && !theaterMode? (
                 <Grid container spacing={2} style={{ width: '85%', margin: '0vw auto' }}>
                     <Grid item xs={12} md={8} >
