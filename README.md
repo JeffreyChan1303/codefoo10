@@ -1,8 +1,6 @@
 # IGN Code Foo 10 - Front-end project application
 
 ### A simple react website with video player and api for IGN CodeFoo10 engineering  intern Application.
-* [Codefoo Introduction](https://github.com/JeffreyChan1303/codefoo10/tree/master/CodeFooQuestions/Introduction.pdf)
-* [Codefoo Hisui's Power Plant](https://github.com/JeffreyChan1303/codefoo10/tree/master/CodeFooQuestions/HisuisPowerPlant.pdf)
 * [Deployed Website link](https://jeffreychancodefoo2022.netlify.app/)
 
 ## Table of Contents
